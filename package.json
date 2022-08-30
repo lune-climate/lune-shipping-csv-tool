@@ -21,8 +21,12 @@
   },
   "homepage": "https://github.com/lune-climate/lune-csv-calculator#readme",
   "dependencies": {
+    "@lune-climate/lune": "^2.0.8",
     "@types/node": "^18.7.13",
+    "camelcase-keys": "^6.2.2",
+    "snakecase-keys": "^4.0.2",
     "csv-parse": "^5.3.0",
+    "dotenv": "^16.0.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "nodemon": "^2.0.19",
