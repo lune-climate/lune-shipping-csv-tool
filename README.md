@@ -4,7 +4,7 @@ lune-shipping-csv-tool
 ## Intro
 
 This is a simple utility that will help to estimate CO2 emissions (caused by shipping goods for example) of multi-leg shipments.
-This is done via using the [Lune API](https://docs.lune.co/api-reference/endpoints-emission-estimates.html#get-a-multi-leg-shipping-emission-estimate).
+This is done via using the [Lune API](https://docs.lune.co).
 
 ## How to install
 
@@ -23,7 +23,7 @@ To install this utility and start using it, first perform the following steps:
 This utility is a CLI application that parses a CSV file, makes a request to the Lune API for each row, and outputs a 
 new CSV file with the estimated CO2 emissions.
 
-You will need a valid Lune API (you can generate one from https://dashboard.lune.co/developers) - it doesn't matter if 
+You will need a valid Lune API key (you can generate one from https://dashboard.lune.co/developers) - it doesn't matter if 
 it's a live/test key. You should page the key in the .env file in the root of the project.
 
 You will also need to create a CSV input file within the /input folder. Please examine the existing file `input/sampleInput.csv`
