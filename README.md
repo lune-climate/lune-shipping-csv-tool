@@ -24,7 +24,8 @@ This utility is a CLI application that parses a CSV file, makes a request to the
 new CSV file with the estimated CO2 emissions.
 
 You will need a valid Lune API key (you can generate one from https://dashboard.lune.co/developers) - it doesn't matter if 
-it's a live/test key. You should page the key in the .env file in the root of the project.
+it's a live/test key. You should put the key in the .env file in the root of the project so that it can be accessed
+as an environmental variable when running the utility.
 
 You will also need to create a CSV input file within the /input folder. Please examine the existing file `input/sampleInput.csv`
 to see the format of the file.
