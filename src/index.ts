@@ -125,11 +125,14 @@ const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, L
     }, {} as Record<number, LegFromCSV>)
 
 const main = async () => {
-    if (!process.env.NAME_OF_CSV_FILE || !process.env.API_KEY) {
-        console.log('Please set NAME_OF_CSV_FILE and API_KEY in .env')
+    const nameOfCSVFile = process.argv[2]
+    if (!nameOfCSVFile || !process.env.API_KEY) {
+        console.log(
+            'Please set API_KEY in .env and pass the name of the source CSV file within /input as an argument.',
+        )
         return
     }
-    const pathToShippingDataCSV = `./input/${process.env.NAME_OF_CSV_FILE.replace('.csv', '')}.csv`
+    const pathToShippingDataCSV = `./input/${nameOfCSVFile.replace('.csv', '')}.csv`
     const parsedCSV: any[] = await parseCSV(pathToShippingDataCSV)
     const client = new LuneClient(process.env.API_KEY)
 

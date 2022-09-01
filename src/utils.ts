@@ -111,8 +111,6 @@ export function writeResultsToCSV({
         }
     })
 
-    fs.writeFileSync(
-        `output/${process.env.NAME_OF_CSV_FILE}_${Date.now()}.csv`,
-        stringify(parsedCSV),
-    )
+    const nameOfCSVFile = process.argv[2].replace('.csv', '')
+    fs.writeFileSync(`output/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
 }
