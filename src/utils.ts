@@ -61,10 +61,6 @@ export function writeResultsToCSV({
 }) {
     const parsedCSV = parseSync(fs.readFileSync(pathToShippingDataCSV))
 
-    if (!fs.existsSync('output')) {
-        fs.mkdirSync('output')
-    }
-
     const header = parsedCSV[0]
     const estimateIdIndex = header.indexOf(Column.ESTIMATE_ID)
     const totalMassIndex = header.indexOf(Column.TOTAL_MASS_TCO2)
@@ -115,5 +111,12 @@ export function writeResultsToCSV({
 
     const argv = minimist(process.argv.slice(2))
     const nameOfCSVFile = path.parse(argv.p).name
+
+    if (argv.o && !fs.existsSync(argv.o)) {
+        fs.mkdirSync(argv.o, {
+            recursive: true,
+        })
+    }
+
     fs.writeFileSync(`${argv?.o || '.'}/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
 }
