@@ -3,8 +3,9 @@ import { parse } from 'csv-parse'
 import { parse as parseSync } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
 import fs from 'fs'
-import { EstimateResult } from './types'
+import { EstimateResult, LegFromCSV } from './types'
 import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
+import { Address } from '@lune-climate/lune'
 
 enum Column {
     ESTIMATE_ID = 'estimate_id',
@@ -12,6 +13,28 @@ enum Column {
     TOTAL_DISTANCE_KM = 'total_distance_km',
     ERROR = 'error',
 }
+
+/**
+ * Trim each key and value in the Record
+ * Remove any entries with a falsy key or value (i.e. empty string or null)
+ * @param journey
+ */
+export const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
+    Object.entries(journey).reduce((acc, [key, value]) => {
+        const trimmedKey = key.trim()
+        const trimmedValue = value.trim()
+        if (trimmedKey && trimmedValue) {
+            acc[trimmedKey] = trimmedValue
+        }
+        return acc
+    }, {} as Record<string, string>)
+
+export const mapLegToAddress = (leg: LegFromCSV): Address => ({
+    streetLine1: leg.street,
+    city: leg.city,
+    postcode: leg.postcode,
+    countryCode: leg.country,
+})
 
 export async function parseCSV(filename: string) {
     const promise = new Promise((resolve, reject) => {

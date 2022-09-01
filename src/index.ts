@@ -1,5 +1,5 @@
-import { Address, Distance, LuneClient, MassUnit, SimpleShippingMethod } from '@lune-climate/lune'
-import { parseCSV, writeResultsToCSV } from './utils'
+import { Distance, LuneClient, MassUnit, SimpleShippingMethod } from '@lune-climate/lune'
+import { mapLegToAddress, parseCSV, trimAndRemoveEmptyEntries, writeResultsToCSV } from './utils'
 import 'dotenv/config'
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import { estimatePayload, EstimateResult, LegFromCSV } from './types'
@@ -26,9 +26,14 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
 
     const parsedLegsArr = []
     for (const [number, leg] of Object.entries(journeyGroupedIntoLegs)) {
-        if (!(leg.street && leg.postcode && leg.city && leg.country) && !leg.distance_km) {
+        const containsAddress = leg.street && leg.postcode && leg.city && leg.country
+        const containsDistance = leg.distance_km
+        const nextLegContainsDistance = journeyGroupedIntoLegs[parseInt(number) + 1]?.distance_km
+
+        if (!containsAddress && !containsDistance && !nextLegContainsDistance) {
             throw new Error(
-                `Missing (street, postcode, city, country) or (distance) on ${journey.shipment_id} - leg ${number} - please provide one of those.`,
+                `Missing (street, postcode, city, country) or (distance) on ${journey.shipment_id} - leg ${number} - please provide one of those.
+                 If this is the pickup point (leg zero) -> you can also provide distance_km on leg 1.`,
             )
         }
 
@@ -36,8 +41,8 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
             continue
         }
 
-        if (!leg.method) {
-            throw new Error(`Missing method on leg ${number} of ${journey.shipment_id}`)
+        if (!leg.method && !leg.imo_number) {
+            throw new Error(`Missing method/imo_number on leg ${number} of ${journey.shipment_id}`)
         }
 
         const route = leg.distance_km
@@ -51,7 +56,9 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
               }
 
         parsedLegsArr.push({
-            method: leg.method as SimpleShippingMethod,
+            method: leg.imo_number
+                ? { vesselImoNumber: leg.imo_number }
+                : (leg.method as SimpleShippingMethod),
             ...(leg.country && { countryCode: leg.country }),
             route,
         })
@@ -91,7 +98,8 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
 const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, LegFromCSV> =>
     Object.entries(journey).reduce((acc, [key, value]) => {
         if (key.includes('leg')) {
-            const [leg, field] = key.split('_')
+            // split only on first occurrence of '_'
+            const [leg, field] = key.split(/_(.*)/s)
             const legNumber = leg.replace('leg', '')
 
             if (!legNumber) {
@@ -116,28 +124,6 @@ const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, L
         return acc
     }, {} as Record<number, LegFromCSV>)
 
-/**
- * Trim each key and value in the Record
- * Remove any entries with a falsy key or value (i.e. empty string or null)
- * @param journey
- */
-const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
-    Object.entries(journey).reduce((acc, [key, value]) => {
-        const trimmedKey = key.trim()
-        const trimmedValue = value.trim()
-        if (trimmedKey && trimmedValue) {
-            acc[trimmedKey] = trimmedValue
-        }
-        return acc
-    }, {} as Record<string, string>)
-
-const mapLegToAddress = (leg: LegFromCSV): Address => ({
-    streetLine1: leg.street,
-    city: leg.city,
-    postcode: leg.postcode,
-    countryCode: leg.country,
-})
-
 const main = async () => {
     if (!process.env.NAME_OF_CSV_FILE || !process.env.API_KEY) {
         console.log('Please set NAME_OF_CSV_FILE and API_KEY in .env')
@@ -154,7 +140,10 @@ const main = async () => {
                 payload = buildEstimatePayload(journey)
                 const estimateResponse = await client.createMultiLegShippingEstimate(payload)
                 if (estimateResponse.err) {
-                    throw new Error((estimateResponse.val as ApiError).errors?.toString())
+                    throw new Error(
+                        (estimateResponse.val as ApiError)?.description ||
+                            estimateResponse?.val?.errors?.errors[0].toString(),
+                    )
                 }
                 return estimateResponse.unwrap()
             } catch (e) {

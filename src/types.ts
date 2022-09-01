@@ -11,6 +11,7 @@ export type estimatePayload = {
 
 export type LegFromCSV = {
     method: string
+    imo_number: string
     country: string
     city: string
     street: string
