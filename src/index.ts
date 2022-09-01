@@ -1,8 +1,8 @@
 import { Address, Distance, LuneClient, MassUnit, SimpleShippingMethod } from '@lune-climate/lune'
-import { parseCsv } from './utils'
+import { parseCSV, writeResultsToCSV } from './utils'
 import 'dotenv/config'
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
-import { estimatePayload, LegFromCSV } from './types'
+import { estimatePayload, EstimateResult, LegFromCSV } from './types'
 
 /**
  * Takes one journey (a single row from CSV)
@@ -20,9 +20,13 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
 
     const journeyGroupedIntoLegs = groupJourneyIntoLegs(trimmedJourney)
 
+    if (Object.keys(journeyGroupedIntoLegs).length > 10) {
+        throw new Error(`Too many legs on ${journey.shipment_id} - max 10.`)
+    }
+
     const parsedLegsArr = []
     for (const [number, leg] of Object.entries(journeyGroupedIntoLegs)) {
-        if (!(leg.street && leg.postcode && leg.city && leg.country) && !leg.distance) {
+        if (!(leg.street && leg.postcode && leg.city && leg.country) && !leg.distance_km) {
             throw new Error(
                 `Missing (street, postcode, city, country) or (distance) on ${journey.shipment_id} - leg ${number} - please provide one of those.`,
             )
@@ -36,9 +40,9 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
             throw new Error(`Missing method on leg ${number} of ${journey.shipment_id}`)
         }
 
-        const route = leg.distance
+        const route = leg.distance_km
             ? {
-                  amount: leg.distance,
+                  amount: leg.distance_km,
                   unit: Distance.unit.KM,
               }
             : {
@@ -114,7 +118,7 @@ const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, L
 
 /**
  * Trim each key and value in the Record
- * Remove any entries with a falsey key or value (i.e empty string or null)
+ * Remove any entries with a falsy key or value (i.e. empty string or null)
  * @param journey
  */
 const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
@@ -140,29 +144,30 @@ const main = async () => {
         return
     }
     const pathToShippingDataCSV = `./input/${process.env.NAME_OF_CSV_FILE.replace('.csv', '')}.csv`
-    const parsedCSV: any[] = await parseCsv(pathToShippingDataCSV)
-
+    const parsedCSV: any[] = await parseCSV(pathToShippingDataCSV)
     const client = new LuneClient(process.env.API_KEY)
 
-    for (const journey of parsedCSV) {
-        let payload
-        try {
-            payload = buildEstimatePayload(journey)
-            const estimateResponse = await client.createMultiLegShippingEstimate(payload)
-
-            if (estimateResponse.err) {
-                console.log(`---est.error---`, (estimateResponse.val as ApiError).errors?.errors[0])
+    const estimates: EstimateResult[] = await Promise.all(
+        parsedCSV.map(async (journey) => {
+            let payload
+            try {
+                payload = buildEstimatePayload(journey)
+                const estimateResponse = await client.createMultiLegShippingEstimate(payload)
+                if (estimateResponse.err) {
+                    throw new Error((estimateResponse.val as ApiError).errors?.toString())
+                }
+                return estimateResponse.unwrap()
+            } catch (e) {
+                console.log(`Failed to create estimate for ${journey.shipment_id}: `, e)
+                return { err: (e as Error).message }
             }
+        }),
+    )
 
-            // TODO write this to a CSV
-            console.log(
-                `---estimate ${journey.shipment_id}---`,
-                JSON.stringify(estimateResponse.unwrap(), null, 2),
-            )
-        } catch (e) {
-            console.log(`Failed to create estimate for ${journey.shipment_id}`, e)
-        }
-    }
+    writeResultsToCSV({
+        pathToShippingDataCSV,
+        results: estimates,
+    })
 }
 
 main()

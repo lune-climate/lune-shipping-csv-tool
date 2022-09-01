@@ -26,6 +26,7 @@
     "camelcase-keys": "^6.2.2",
     "snakecase-keys": "^4.0.2",
     "csv-parse": "^5.3.0",
+    "csv-stringify": "^6.2.0",
     "dotenv": "^16.0.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
