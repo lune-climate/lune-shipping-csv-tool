@@ -6,6 +6,8 @@ import fs from 'fs'
 import { EstimateResult, LegFromCSV } from './types'
 import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
 import { Address } from '@lune-climate/lune'
+import path from 'path'
+import minimist from 'minimist'
 
 enum Column {
     ESTIMATE_ID = 'estimate_id',
@@ -111,6 +113,7 @@ export function writeResultsToCSV({
         }
     })
 
-    const nameOfCSVFile = process.argv[2].replace('.csv', '')
-    fs.writeFileSync(`output/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
+    const argv = minimist(process.argv.slice(2))
+    const nameOfCSVFile = path.parse(argv.p).name
+    fs.writeFileSync(`${argv?.o || '.'}/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
 }
