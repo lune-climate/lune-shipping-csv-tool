@@ -1,5 +1,5 @@
 {
-  "name": "lune-csv-calculator",
+  "name": "lune-shipping-csv-tool",
   "version": "1.0.0",
   "scripts": {
     "dev": "nodemon",
