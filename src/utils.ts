@@ -110,7 +110,7 @@ export function writeResultsToCSV({
     })
 
     const argv = minimist(process.argv.slice(2))
-    const nameOfCSVFile = path.parse(argv.p).name
+    const nameOfCSVFile = path.parse(process.argv[2]).name
 
     if (argv.o && !fs.existsSync(argv.o)) {
         fs.mkdirSync(argv.o, {

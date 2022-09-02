@@ -3,7 +3,6 @@ import { mapLegToAddress, parseCSV, trimAndRemoveEmptyEntries, writeResultsToCSV
 import 'dotenv/config'
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import { estimatePayload, EstimateResult, LegFromCSV } from './types'
-import minimist from 'minimist'
 
 /**
  * Takes one journey (a single row from CSV)
@@ -126,16 +125,18 @@ const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, L
     }, {} as Record<number, LegFromCSV>)
 
 const main = async () => {
-    const argv = minimist(process.argv.slice(2))
-    const pathToCSVFile = argv.p
-    if (!pathToCSVFile || !process.env.API_KEY) {
-        console.log('Please set API_KEY in .env and pass the path to CSV file as an argument.')
+    const pathToCSVFile = process.argv[2]
+    if (!process.env.API_KEY) {
+        console.log('Please set API_KEY in .env')
         return
     }
 
-    const pathToShippingDataCSV = `${pathToCSVFile.replace('.csv', '')}.csv`
+    if (!pathToCSVFile) {
+        console.log('Please provide a path to a CSV file')
+        return
+    }
 
-    const parsedCSV: any[] = await parseCSV(pathToShippingDataCSV)
+    const parsedCSV: any[] = await parseCSV(pathToCSVFile)
     const client = new LuneClient(process.env.API_KEY)
 
     const estimates: EstimateResult[] = await Promise.all(
@@ -159,7 +160,7 @@ const main = async () => {
     )
 
     writeResultsToCSV({
-        pathToShippingDataCSV,
+        pathToShippingDataCSV: pathToCSVFile,
         results: estimates,
     })
 }

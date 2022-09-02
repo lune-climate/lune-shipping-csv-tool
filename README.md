@@ -64,7 +64,7 @@ You can provide up to 10 legs in this way. Checkout the sample input to get a be
 
 Once you've installed everything you should be able to run the utility like so:
 ```bash
-yarn start -p input/sampleInput.csv -o output
+yarn start input/sampleInput.csv
 ```
 where `input/sampleInput.csv` is the name of the input file you want to process. The output file will be created in the provided output (-o) folder or 
 the project root if no output folder is provided.\
