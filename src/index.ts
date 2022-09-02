@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Distance, LuneClient, MassUnit, SimpleShippingMethod } from '@lune-climate/lune'
 import { mapLegToAddress, parseCSV, trimAndRemoveEmptyEntries, writeResultsToCSV } from './utils'
 import 'dotenv/config'
