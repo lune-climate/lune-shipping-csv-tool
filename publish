@@ -1,0 +1,25 @@
+#!/bin/bash
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+MASTER=master
+
+if [ $BRANCH != $MASTER ]; then
+    echo "Currenct branch: $BRANCH. Please checkout $MASTER"
+    exit 1
+fi
+
+if [[ $(git status --porcelain --untracked-files=no) ]]; then
+    echo "Ensure you have no local changes. Please remove or commit them".
+    exit 1
+fi
+
+# fetch remote master
+git fetch origin $MASTER > /dev/null 2>&1
+if [[ $(git diff origin/master) ]]; then
+    echo "Local $MASTER differs from remote $MASTER. Please pull $MASTER"
+    exit 1
+fi
+
+echo "Publishing ..."
+npm publish --access public
+echo "done 🎉"
