@@ -14,9 +14,11 @@ This utility is a NodeJS application and you should be able to run it on variety
 
 To install this utility and start using it, first perform the following steps:
 
-1. Install npm https://www.npmjs.com/
-2. Install Node if you don't have it already: https://nodejs.org/en/
-3. Install lune-shipping-csv-tool globally via running command `npm install -g lune-shipping-csv-tool`
+1. Install Node if you don't have it already: https://nodejs.org/en/
+2. Install lune-shipping-csv-tool globally via running command `npm install -g lune-shipping-csv-tool` in a command-line interpreter 
+(typically Terminal on OSX or Command Prompt on Windows)
+3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
+will result in an error `Please set API_KEY in .env`
 
 ## How to use
 
@@ -24,10 +26,9 @@ This utility is a CLI application that parses a CSV file, makes a request to the
 new CSV file with the estimated CO2 emissions.
 
 You will need a valid Lune API key (you can generate one from https://dashboard.lune.co/developers) - it doesn't matter if 
-it's a live/test key. You should put the key in the .env file in the root of the project so that it can be accessed
-as an environmental variable when running the utility.
+it's a live/test key.
 
-You will also need to create a CSV input file within the /input folder. Please examine [this existing file](https://github.com/lune-climate/lune-shipping-csv-tool/blob/master/input/sampleInput.csv)
+You will also need to create a CSV input file. Please examine [this existing file](https://github.com/lune-climate/lune-shipping-csv-tool/blob/master/input/sampleInput.csv)
 to understand the format.
 
 ## The CSV Input format
@@ -54,7 +55,7 @@ Additionally, you need to provide at least a single leg of the journey. The foll
 `leg1_distance_km` -> optional. If provided, the tool will use this value instead of calculating it. Thus you can skip the address info.\
 `leg1_imo_number` -> optional. If provided, the method of transportation will be calculated as IdentifiedVesselShippingMethod. See https://docs.lune.co/api-reference/identifiedvesselshippingmethod.html#identifiedvesselshippingmethod \
 
-Additionally, the following columns should be present by left empty:
+Additionally, the following columns should be present but left empty:
 `leg1_estimated_distance_km` -> the estimated distance of the leg in km. Populated by the tool after running
 `leg1_total_tco2_` -> the estimated CO2 emissions of the leg in kg. Populated by the tool after running
 
@@ -62,13 +63,21 @@ You can provide up to 10 legs in this way. Checkout the sample input to get a be
 
 ## Run a calculation
 
-Once you've installed everything you should be able to run the utility with the following Shell command:
+Create a CSV on your machine in some folder. Let's say it's `sampleInput.csv` within /downloads.\
+
+Now start the command line interpreter within that folder. You will need to provide the API key 
+as an environment variable `API_KEY` and also provide the path to the input file.
+ 
+Here's what that looks like in the OSX terminal:
 ```bash
 API_KEY=your_api_key_here lune-csv-calculator sampleInput.csv
 ```
-where `sampleInput.csv` is the name of the CSV input file you want to process - it should be in the same folder 
-you're currently in.
 
-The output file will be created in the same folder.
+And in the Windows command prompt:
+```powershell
+set API_KEY=your_api_key_here
+lune-csv-calculator sampleInput.csv
+```
 
+The output file will then be created in the same folder and will contain a timestamp e.g. `downloads/sampleInput_1662112271931.csv`
 The result is the same CSV file with the result columns filled in (checkout the [sample output file](https://github.com/lune-climate/lune-shipping-csv-tool/blob/master/output/sampleInput_1662043831339.csv)).
