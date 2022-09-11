@@ -1,5 +1,11 @@
 #!/usr/bin/env node
-import { Distance, LuneClient, MassUnit, SimpleShippingMethod } from '@lune-climate/lune'
+import {
+    ContainerShippingMethod,
+    Distance,
+    LuneClient,
+    MassUnit,
+    SimpleShippingMethod,
+} from '@lune-climate/lune'
 import { mapLegToAddress, parseCSV, trimAndRemoveEmptyEntries, writeResultsToCSV } from './utils'
 import 'dotenv/config'
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
@@ -27,7 +33,7 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
 
     const parsedLegsArr = []
     for (const [number, leg] of Object.entries(journeyGroupedIntoLegs)) {
-        const containsAddress = leg.street && leg.postcode && leg.city && leg.country
+        const containsAddress = leg.street || leg.postcode || leg.city || leg.country
         const containsDistance = leg.distance_km
         const nextLegContainsDistance = journeyGroupedIntoLegs[parseInt(number) + 1]?.distance_km
 
@@ -59,6 +65,10 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
         parsedLegsArr.push({
             method: leg.imo_number
                 ? { vesselImoNumber: leg.imo_number }
+                : leg.method === 'container_ship'
+                ? ({
+                      vesselType: 'container_ship',
+                  } as ContainerShippingMethod)
                 : (leg.method as SimpleShippingMethod),
             ...(leg.country && { countryCode: leg.country }),
             route,

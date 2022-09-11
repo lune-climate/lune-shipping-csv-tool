@@ -32,10 +32,10 @@ export const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
     }, {} as Record<string, string>)
 
 export const mapLegToAddress = (leg: LegFromCSV): Address => ({
-    streetLine1: leg.street,
-    city: leg.city,
-    postcode: leg.postcode,
-    countryCode: leg.country,
+    streetLine1: leg.street || '',
+    city: leg.city || '',
+    postcode: leg.postcode || '',
+    countryCode: leg.country || '',
 })
 
 export async function parseCSV(filename: string) {
