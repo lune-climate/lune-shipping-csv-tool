@@ -1,6 +1,6 @@
 {
   "name": "lune-shipping-csv-tool",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "scripts": {
     "dev": "nodemon",
     "build": "rimraf ./build && tsc",
