@@ -17,6 +17,7 @@ export type LegFromCSV = {
     street: string
     distance_km: string
     postcode: string
+    coordinates: string
 }
 
 export type EstimateResult = MultiLegShippingEmissionEstimate | { err: string }

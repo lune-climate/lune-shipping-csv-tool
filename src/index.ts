@@ -6,7 +6,7 @@ import {
     MassUnit,
     SimpleShippingMethod,
 } from '@lune-climate/lune'
-import { mapLegToAddress, parseCSV, trimAndRemoveEmptyEntries, writeResultsToCSV } from './utils'
+import { mapLegToLocation, parseCSV, trimAndRemoveEmptyEntries, writeResultsToCSV } from './utils'
 import 'dotenv/config'
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import { estimatePayload, EstimateResult, LegFromCSV } from './types'
@@ -33,13 +33,13 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
 
     const parsedLegsArr = []
     for (const [number, leg] of Object.entries(journeyGroupedIntoLegs)) {
-        const containsAddress = leg.street || leg.postcode || leg.city || leg.country
+        const containsLocation = leg.street || leg.postcode || leg.city || leg.country || leg.coordinates
         const containsDistance = leg.distance_km
         const nextLegContainsDistance = journeyGroupedIntoLegs[parseInt(number) + 1]?.distance_km
 
-        if (!containsAddress && !containsDistance && !nextLegContainsDistance) {
+        if (!containsLocation && !containsDistance && !nextLegContainsDistance) {
             throw new Error(
-                `Missing (street, postcode, city, country) or (distance) on ${journey.shipment_id} - leg ${number} - please provide one of those.
+                `Missing (street, postcode, city, country) or (distance) or (coordinates) on ${journey.shipment_id} - leg ${number} - please provide one of those.
                  If this is the pickup point (leg zero) -> you can also provide distance_km on leg 1.`,
             )
         }
@@ -58,8 +58,8 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
                   unit: Distance.unit.KM,
               }
             : {
-                  source: mapLegToAddress(journeyGroupedIntoLegs[parseInt(number) - 1]),
-                  destination: mapLegToAddress(leg),
+                  source: mapLegToLocation(journeyGroupedIntoLegs[parseInt(number) - 1]),
+                  destination: mapLegToLocation(leg),
               }
 
         parsedLegsArr.push({
