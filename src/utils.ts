@@ -5,7 +5,7 @@ import { stringify } from 'csv-stringify/sync'
 import fs from 'fs'
 import { EstimateResult, LegFromCSV } from './types'
 import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
-import { Address } from '@lune-climate/lune'
+import { Address, GeographicCoordinates } from '@lune-climate/lune'
 import path from 'path'
 import minimist from 'minimist'
 
@@ -31,12 +31,47 @@ export const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
         return acc
     }, {} as Record<string, string>)
 
-export const mapLegToAddress = (leg: LegFromCSV): Address => ({
-    streetLine1: leg.street || '',
-    city: leg.city || '',
-    postcode: leg.postcode || '',
-    countryCode: leg.country || '',
-})
+export const mapLegToLocation = (leg: LegFromCSV): Address | GeographicCoordinates => {
+    if (leg.coordinates) {
+        return parseCoordinates(leg.coordinates)
+    }
+    else {
+        return {
+            streetLine1: leg.street || '',
+            city: leg.city || '',
+            postcode: leg.postcode || '',
+            countryCode: leg.country || '',
+        }
+    }
+}
+
+/**
+ * Parse geographic coordinates from a string format used in the input CSV files.
+ * 
+ * An invalid input will result in an exception.
+ *  
+ * @param coordinates A string of the following form: "lat <number> lon <number>"
+ */
+function parseCoordinates(coordinates: string): GeographicCoordinates {
+    function bail() {
+        throw new Error(`Coordinates must be formatted like this: "lat 12.345 lon -12.345", got: "${coordinates}"`)
+    }
+    const parts = coordinates.split(" ")
+    if (parts.length !== 4) {
+        bail()
+    }
+
+    const [latLiteral, latText, lonLiteral, lonText] = parts
+    if (latLiteral !== "lat" || lonLiteral !== "lon") {
+        bail()
+    }
+    const lat = parseFloat(latText)
+    const lon = parseFloat(lonText)
+    if (Number.isNaN(lat) || Number.isNaN(lon)) {
+        bail()
+    }
+    return { lat, lon }
+}
 
 export async function parseCSV(filename: string) {
     const promise = new Promise((resolve, reject) => {
