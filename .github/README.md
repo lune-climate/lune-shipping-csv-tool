@@ -44,17 +44,24 @@ Each row in the CSV file represents a multi-leg journey. The following columns a
 `pickup_city` -> start city of the journey \
 `pickup_postcode` -> postcode of the start city \	
 `pickup_street` -> street of the start of the journey \
+`pickup_coordinates` -> the geopgrahic coordinates of the pickup location
 
 Additionally, you need to provide at least a single leg of the journey. The following columns are required for each leg:
-`leg1_method` -> the method of transport for the leg. Optional if `leg1_imo_number` is provided. See https://docs.lune.co/api-reference/simpleshippingmethod.html \
+`leg1_method` -> the method of transport for the leg. Optional if `leg1_imo_number` is provided. \
 `leg1_country` -> the country code\
 `leg1_city` -> the city\
 `leg1_postcode` -> the postcode\
 `leg1_street` -> the street\
+`leg1_coordinates` -> the geographic coordinates of the location
 `leg1_distance_km` -> optional. If provided, the tool will use this value instead of calculating it. Thus you can skip the address info.\
-`leg1_imo_number` -> optional. If provided, the method of transportation will be calculated as IdentifiedVesselShippingMethod. See https://docs.lune.co/api-reference/identifiedvesselshippingmethod.html#identifiedvesselshippingmethod \
+`leg1_imo_number` -> optional. If provided, the method of transportation will be calculated as IdentifiedVesselShippingMethod.
 
-Additionally, the following columns should be present by left empty:
+The `_coordinates` fields are mutually exclusive with (`_country`, `_city`, `_postcode`,
+`_street`) – you can provide only one or the other.
+
+Documentation: https://docs.lune.co/resources/emission-estimates/create-multi-leg-shipping-estimate
+
+Additionally, the following columns should be present but left empty:
 `leg1_estimated_distance_km` -> the estimated distance of the leg in km. Populated by the tool after running
 `leg1_total_tco2_` -> the estimated CO2 emissions of the leg in kg. Populated by the tool after running
 
