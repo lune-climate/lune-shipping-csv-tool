@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import cliProgress from 'cli-progress'
 import {
     ContainerShippingMethod,
     Distance,
@@ -150,6 +151,8 @@ const main = async () => {
     const parsedCSV: any[] = await parseCSV(pathToCSVFile)
     const client = new LuneClient(process.env.API_KEY)
 
+    const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    progressBar.start(parsedCSV.length, 0)
     const estimates: EstimateResult[] = []
     for (const journey of parsedCSV) {
         const payload = buildEstimatePayload(journey)
@@ -196,7 +199,9 @@ const main = async () => {
             console.log(`Waiting ${delay} ms to retry estimate for ${journey.shipment_id} (reason: ${description})`)
             await sleep(delay)
         }
+        progressBar.increment()
     }
+    progressBar.stop()
 
     writeResultsToCSV({
         pathToShippingDataCSV: pathToCSVFile,
