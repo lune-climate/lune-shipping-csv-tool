@@ -155,3 +155,12 @@ export function writeResultsToCSV({
 
     fs.writeFileSync(`${argv?.o || '.'}/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
 }
+
+/**
+ * Sleep for `ms` miliseconds.
+ * @param ms The number of miliseconds to sleep.
+ * @returns The promise that needs to be awaited to sleep.
+ */
+export function sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
