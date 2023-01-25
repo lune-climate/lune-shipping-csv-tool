@@ -8,7 +8,6 @@ import {
     SimpleShippingMethod,
 } from '@lune-climate/lune'
 import { mapLegToLocation, parseCSV, sleep, trimAndRemoveEmptyEntries, writeResultsToCSV } from './utils'
-import 'dotenv/config'
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import { estimatePayload, EstimateResult, LegFromCSV } from './types'
 
@@ -139,7 +138,7 @@ const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, L
 const main = async () => {
     const pathToCSVFile = process.argv[2]
     if (!process.env.API_KEY) {
-        console.log('Please set API_KEY in .env')
+        console.log('Please set the API_KEY environment variable')
         return
     }
 
