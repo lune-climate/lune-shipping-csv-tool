@@ -6,7 +6,7 @@ import {
     MassUnit,
     SimpleShippingMethod,
 } from '@lune-climate/lune'
-import { mapLegToLocation, parseCSV, trimAndRemoveEmptyEntries, writeResultsToCSV } from './utils'
+import { mapLegToLocation, parseCSV, sleep, trimAndRemoveEmptyEntries, writeResultsToCSV } from './utils'
 import 'dotenv/config'
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import { estimatePayload, EstimateResult, LegFromCSV } from './types'
@@ -153,17 +153,49 @@ const main = async () => {
     const estimates: EstimateResult[] = []
     for (const journey of parsedCSV) {
         const payload = buildEstimatePayload(journey)
-        const estimateResponse = await client.createMultiLegShippingEstimate(payload)
-        if (estimateResponse.err) { 
+        // An arbitrary starting point
+        let retriesLeft = 10
+        let delay = 50
+
+        while (retriesLeft-- > 0) {
+            const estimateResponse = await client.createMultiLegShippingEstimate(payload)
+            if (estimateResponse.ok) {
+                estimates.push(estimateResponse.unwrap())
+                break
+            }
             const apiError = estimateResponse.val
+            const statusCode = apiError.statusCode
+            const shouldRetry = retriesLeft > 0 && (
+                // If we see no status code this means it's some kind of a communication error
+                // and we have no reason not to retry.
+                !statusCode ||
+                // Server errors are likely to be temporary and it's safe to retry in that case
+                // too.
+                statusCode >= 500 ||
+                // We're hitting the API too fast, retry this one too (given we introduce some
+                // delay, of course, which we do))
+                statusCode === 429
+                // Other 4xx errors are definitely not good for retrying, they're a sign of
+                // programming errors or input data issues and need to be fixed on our side.
+            )
             const description = (apiError as ApiError)?.description || apiError.errors?.errors[0].toString()
-            console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
-            // TODO: This type assertion shouldn't be necessary, we won't ever get
-            // undefined here
-            estimates.push({ err: description as string })
-            continue
+            if (!shouldRetry) {
+                console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
+                // TODO: This type assertion shouldn't be necessary, we won't ever get
+                // undefined here
+                estimates.push({ err: description as string })
+                break
+            }
+
+            // An exponential backoff with a limit, the more errors we hit the more API
+            // call delay we add because we likely have either a case of a temporary server
+            // failure (in which case if we wait the issue is likely to go away) or
+            // we're hitting the rate limit (in which case we *need* to wait for the issue
+            // to go away).
+            delay = Math.min(delay * 2, 2000)
+            console.log(`Waiting ${delay} ms to retry estimate for ${journey.shipment_id} (reason: ${description})`)
+            await sleep(delay)
         }
-        estimates.push(estimateResponse.unwrap())
     }
 
     writeResultsToCSV({
