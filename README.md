@@ -18,7 +18,7 @@ To install this utility and start using it, first perform the following steps:
 2. Install lune-shipping-csv-tool globally via running command `npm install -g lune-shipping-csv-tool` in a command-line interpreter 
 (typically Terminal on OSX or Command Prompt on Windows)
 3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
-will result in an error `Please set API_KEY in .env`
+will result in an error `Please set the API_KEY environment variable`
 
 ## How to use
 
