@@ -21,10 +21,9 @@
   },
   "homepage": "https://github.com/lune-climate/lune-csv-calculator#readme",
   "dependencies": {
-    "@lune-climate/lune": "^2.0.8",
+    "@lune-climate/lune": "^2.2.4",
     "@types/minimist": "^1.2.2",
     "@types/node": "^18.7.13",
-    "camelcase-keys": "^6.2.2",
     "cli-progress": "^3.11.2",
     "csv-parse": "^5.3.0",
     "csv-stringify": "^6.2.0",
@@ -35,7 +34,6 @@
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "snakecase-keys": "^4.0.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.7.4"
   },
