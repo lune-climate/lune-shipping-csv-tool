@@ -152,21 +152,17 @@ const main = async () => {
 
     const estimates: EstimateResult[] = await Promise.all(
         parsedCSV.map(async (journey) => {
-            let payload
-            try {
-                payload = buildEstimatePayload(journey)
-                const estimateResponse = await client.createMultiLegShippingEstimate(payload)
-                if (estimateResponse.err) {
-                    throw new Error(
-                        (estimateResponse.val as ApiError)?.description ||
-                            estimateResponse?.val?.errors?.errors[0].toString(),
-                    )
-                }
-                return estimateResponse.unwrap()
-            } catch (e) {
-                console.log(`Failed to create estimate for ${journey.shipment_id}: `, e)
-                return { err: (e as Error).message }
+            const payload = buildEstimatePayload(journey)
+            const estimateResponse = await client.createMultiLegShippingEstimate(payload)
+            if (estimateResponse.err) { 
+                const apiError = estimateResponse.val
+                const description = (apiError as ApiError)?.description || apiError.errors?.errors[0].toString()
+                console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
+                // TODO: This type assertion shouldn't be necessary, we won't ever get
+                // undefined here
+                return { err: description as string }
             }
+            return estimateResponse.unwrap()
         }),
     )
 
