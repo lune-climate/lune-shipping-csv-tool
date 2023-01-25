@@ -150,21 +150,21 @@ const main = async () => {
     const parsedCSV: any[] = await parseCSV(pathToCSVFile)
     const client = new LuneClient(process.env.API_KEY)
 
-    const estimates: EstimateResult[] = await Promise.all(
-        parsedCSV.map(async (journey) => {
-            const payload = buildEstimatePayload(journey)
-            const estimateResponse = await client.createMultiLegShippingEstimate(payload)
-            if (estimateResponse.err) { 
-                const apiError = estimateResponse.val
-                const description = (apiError as ApiError)?.description || apiError.errors?.errors[0].toString()
-                console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
-                // TODO: This type assertion shouldn't be necessary, we won't ever get
-                // undefined here
-                return { err: description as string }
-            }
-            return estimateResponse.unwrap()
-        }),
-    )
+    const estimates: EstimateResult[] = []
+    for (const journey of parsedCSV) {
+        const payload = buildEstimatePayload(journey)
+        const estimateResponse = await client.createMultiLegShippingEstimate(payload)
+        if (estimateResponse.err) { 
+            const apiError = estimateResponse.val
+            const description = (apiError as ApiError)?.description || apiError.errors?.errors[0].toString()
+            console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
+            // TODO: This type assertion shouldn't be necessary, we won't ever get
+            // undefined here
+            estimates.push({ err: description as string })
+            continue
+        }
+        estimates.push(estimateResponse.unwrap())
+    }
 
     writeResultsToCSV({
         pathToShippingDataCSV: pathToCSVFile,
