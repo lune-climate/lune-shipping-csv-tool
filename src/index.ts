@@ -152,7 +152,6 @@ const main = async () => {
 
     const estimates: EstimateResult[] = []
     for (const journey of parsedCSV) {
-        console.log(`Processing ${journey.shipment_id}`)
         const payload = buildEstimatePayload(journey)
         // An arbitrary starting point
         let retriesLeft = 10
