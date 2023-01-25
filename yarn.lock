@@ -61,12 +61,14 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@lune-climate/lune@^2.0.8":
-  version "2.0.8"
-  resolved "https://registry.yarnpkg.com/@lune-climate/lune/-/lune-2.0.8.tgz#33cbb0b9ac817997e70321d3495b8cc2aee028f8"
-  integrity sha512-rDrrRLqEyV2ROZshJEhj1ldicD2lZZMiFvo5Qmr/JTw70TbKNGmjvpoaer1/xMZh3eCMR+GzGoRlTrHctTpcyg==
+"@lune-climate/lune@^2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@lune-climate/lune/-/lune-2.2.4.tgz#39800d9027218cf99d787d2e0cdac1752bcbd0de"
+  integrity sha512-GHrHNGsCXg3XGm8JjRN+ZWSQjJo36u+PA3fcfZAFswnz06NM5UGXXZWLl9tH8eLJ8rsgOYp0fpNn+ukvdoV1qA==
   dependencies:
     axios "^0.21.1"
+    camelcase-keys "^6.2.2"
+    snakecase-keys "^5.0.0"
     ts-results-es "^3.4.0"
 
 "@nodelib/fs.scandir@2.1.5":
@@ -1135,13 +1137,14 @@ snake-case@^3.0.4:
     dot-case "^3.0.4"
     tslib "^2.0.3"
 
-snakecase-keys@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/snakecase-keys/-/snakecase-keys-4.0.2.tgz#72e28112b77753a68a4eeb110efec05ab391e190"
-  integrity sha512-ZFCo3zZtNN43cy2j4fQDHPxS557Uuzn887FBmDdaSB41D8l/MayuvaSrIlCXGFhZ8sXwrHiNaZiIPpKzi88gog==
+snakecase-keys@^5.0.0:
+  version "5.4.4"
+  resolved "https://registry.yarnpkg.com/snakecase-keys/-/snakecase-keys-5.4.4.tgz#28745b0175863ffc292ad97d96fe4e8e288a87a2"
+  integrity sha512-YTywJG93yxwHLgrYLZjlC75moVEX04LZM4FHfihjHe1FCXm+QaLOFfSf535aXOAd0ArVQMWUAe8ZPm4VtWyXaA==
   dependencies:
     map-obj "^4.1.0"
     snake-case "^3.0.4"
+    type-fest "^2.5.2"
 
 string-width@^4.2.3:
   version "4.2.3"
@@ -1249,6 +1252,11 @@ type-fest@^0.20.2:
   version "0.20.2"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.20.2.tgz#1bf207f4b28f91583666cb5fbd327887301cd5f4"
   integrity sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==
+
+type-fest@^2.5.2:
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-2.19.0.tgz#88068015bb33036a598b952e55e9311a60fd3a9b"
+  integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
 
 typescript@^4.7.4:
   version "4.7.4"
