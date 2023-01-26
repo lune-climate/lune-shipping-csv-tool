@@ -1,8 +1,6 @@
 lune-shipping-csv-tool
 ======================
 
-<!-- README for NPM; the one for GitHub is in .github directory. -->
-
 ## Intro
 
 This is a simple utility that will help to estimate CO2 emissions (caused by shipping goods for example) of multi-leg shipments.
@@ -14,11 +12,21 @@ This utility is a NodeJS application and you should be able to run it on variety
 
 To install this utility and start using it, first perform the following steps:
 
+### Installing from NPM (AKA "I just want to use the application")
+
 1. Install Node if you don't have it already: https://nodejs.org/en/
 2. Install lune-shipping-csv-tool globally via running command `npm install -g lune-shipping-csv-tool` in a command-line interpreter 
 (typically Terminal on OSX or Command Prompt on Windows)
 3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
 will result in an error `Please set the API_KEY environment variable`
+
+### Running the development version (AKA "I want to see how it works or make some changes")
+
+1. Clone this repository
+2. Install Node if you don't have it already
+3. Install a package manager if you don't have it already
+4. Install all dependencies via  `npm install` or `yarn` depending on your package manager of choice
+5. Run the utility via `npm run start` or `yarn start` depending on your package manager of choice
 
 ## How to use
 
@@ -77,14 +85,26 @@ as an environment variable `API_KEY` and also provide the path to the input file
  
 Here's what that looks like in the OSX terminal:
 ```bash
+
+# The NPM version
 API_KEY=your_api_key_here lune-csv-calculator sampleInput.csv
+
+# The development (GitHub) version
+yarn start sampleInput.csv
 ```
 
 And in the Windows command prompt:
 ```powershell
 set API_KEY=your_api_key_here
+
+# The NPM version
 lune-csv-calculator sampleInput.csv
+
+# The development (GitHub) version
+yarn start sampleInput.csv
 ```
+where `input/sampleInput.csv` is the name of the input file you want to process. The output file will be created in the provided output (-o) folder or 
+the project root if no output folder is provided.\
 
 The output file will then be created in the same folder and will contain a timestamp e.g. `downloads/sampleInput_1662112271931.csv`
 The result is the same CSV file with the result columns filled in (checkout the [sample output file](https://github.com/lune-climate/lune-shipping-csv-tool/blob/master/output/sampleInput_1662043831339.csv)).
