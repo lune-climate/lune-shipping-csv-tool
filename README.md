@@ -6,14 +6,7 @@ lune-shipping-csv-tool
 This is a simple utility that will help to estimate CO2 emissions (caused by shipping goods for example) of multi-leg shipments.
 This is done via using the [Lune API](https://docs.lune.co).
 
-## How to install
-
-This utility is a NodeJS application and you should be able to run it on variety of OSes
-(more details on this below).
-
-To install this utility and start using it, first perform the following steps:
-
-### Installing from NPM (AKA "I just want to use the application")
+## Installing from NPM (AKA "I just want to use the application")
 
 This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
 
@@ -26,7 +19,7 @@ will result in an error `Please set the API_KEY environment variable`
 Run `npm update -g lune-shipping-csv-tool` to update the tool to the latest version (note
 that new versions may introduce some backwards-incompatible changes).
 
-### Running the development version (AKA "I want to see how it works or make some changes")
+## Running the development version (AKA "I want to see how it works or make some changes")
 
 This requires a Unix-like operating system (Linux, BSD, macOS, Windows with WSL etc.).
 
