@@ -23,6 +23,9 @@ This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
 3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
 will result in an error `Please set the API_KEY environment variable`
 
+Run `npm update -g lune-shipping-csv-tool` to update the tool to the latest version (note
+that new versions may introduce some backwards-incompatible changes).
+
 ### Running the development version (AKA "I want to see how it works or make some changes")
 
 This requires a Unix-like operating system (Linux, BSD, macOS, Windows with WSL etc.).
@@ -32,6 +35,9 @@ This requires a Unix-like operating system (Linux, BSD, macOS, Windows with WSL 
 3. Install a package manager if you don't have it already
 4. Install all dependencies via  `npm install` or `yarn` depending on your package manager of choice
 5. Run the utility via `npm run start` or `yarn start` depending on your package manager of choice
+
+Run `git` commands to update the local clone of the repository with the latest upstream changes
+(note that some of them may be backwards-incompatible).
 
 ## How to use
 
