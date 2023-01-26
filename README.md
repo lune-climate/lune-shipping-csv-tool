@@ -38,10 +38,31 @@ This utility is a CLI application that parses a CSV file, makes a request to the
 new CSV file with the estimated CO2 emissions.
 
 You will need a valid Lune API key (you can generate one from https://dashboard.lune.co/developers) - it doesn't matter if 
-it's a live/test key.
+it's a live/test key. The application expects the API key to be provided to it via an `API_KEY`
+environment variable:
+
+```
+# Unix-like
+export API_KEY=<the API key secret goes here>
+
+# Windows
+set API_KEY=<The API key secret goes here>
+```
 
 You will also need to create a CSV input file. Please examine [this existing file](https://github.com/lune-climate/lune-shipping-csv-tool/blob/master/input/sampleInput.csv)
 to understand the format.
+
+Then to actually run the tool:
+
+```bash
+lune-csv-calculator <path to the input CSV file>
+```
+
+The output file will appear in the current directory. If you want to define the output directory:
+
+```bash
+lune-csv-calculator <path to the input CSV file> -o <path to the output directory>
+```
 
 ## The CSV Input format
 
@@ -81,36 +102,3 @@ Additionally, the following columns should be present but left empty:
 * `leg1_total_tco2_` -> the estimated CO2 emissions of the leg in kg. Populated by the tool after running
 
 You can provide up to 10 legs in this way. Checkout the sample input to get a better idea.
-
-## Run a calculation
-
-Create a CSV on your machine in some folder. Let's say it's `sampleInput.csv` within /downloads.\
-
-Now start the command line interpreter within that folder. You will need to provide the API key 
-as an environment variable `API_KEY` and also provide the path to the input file.
- 
-Here's what that looks like in the OSX terminal:
-```bash
-
-# The NPM version
-API_KEY=your_api_key_here lune-csv-calculator sampleInput.csv
-
-# The development (GitHub) version
-yarn start sampleInput.csv
-```
-
-And in the Windows command prompt:
-```powershell
-set API_KEY=your_api_key_here
-
-# The NPM version
-lune-csv-calculator sampleInput.csv
-
-# The development (GitHub) version
-yarn start sampleInput.csv
-```
-where `input/sampleInput.csv` is the name of the input file you want to process. The output file will be created in the provided output (-o) folder or 
-the project root if no output folder is provided.\
-
-The output file will then be created in the same folder and will contain a timestamp e.g. `downloads/sampleInput_1662112271931.csv`
-The result is the same CSV file with the result columns filled in (checkout the [sample output file](https://github.com/lune-climate/lune-shipping-csv-tool/blob/master/output/sampleInput_1662043831339.csv)).
