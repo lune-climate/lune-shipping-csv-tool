@@ -34,8 +34,7 @@ export const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
 export const mapLegToLocation = (leg: LegFromCSV): Address | GeographicCoordinates => {
     if (leg.coordinates) {
         return parseCoordinates(leg.coordinates)
-    }
-    else {
+    } else {
         return {
             streetLine1: leg.street || '',
             city: leg.city || '',
@@ -47,22 +46,24 @@ export const mapLegToLocation = (leg: LegFromCSV): Address | GeographicCoordinat
 
 /**
  * Parse geographic coordinates from a string format used in the input CSV files.
- * 
+ *
  * An invalid input will result in an exception.
- *  
+ *
  * @param coordinates A string of the following form: "lat <number> lon <number>"
  */
 function parseCoordinates(coordinates: string): GeographicCoordinates {
     function bail() {
-        throw new Error(`Coordinates must be formatted like this: "lat 12.345 lon -12.345", got: "${coordinates}"`)
+        throw new Error(
+            `Coordinates must be formatted like this: "lat 12.345 lon -12.345", got: "${coordinates}"`,
+        )
     }
-    const parts = coordinates.split(" ")
+    const parts = coordinates.split(' ')
     if (parts.length !== 4) {
         bail()
     }
 
     const [latLiteral, latText, lonLiteral, lonText] = parts
-    if (latLiteral !== "lat" || lonLiteral !== "lon") {
+    if (latLiteral !== 'lat' || lonLiteral !== 'lon') {
         bail()
     }
     const lat = parseFloat(latText)
@@ -162,5 +163,5 @@ export function writeResultsToCSV({
  * @returns The promise that needs to be awaited to sleep.
  */
 export function sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise((resolve) => setTimeout(resolve, ms))
 }
