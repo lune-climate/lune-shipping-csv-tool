@@ -8,7 +8,8 @@
     "start": "npm run build && node build/index.js",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "lint": "eslint . --ext .ts",
-    "preinstall": "rm -rf build/*"
+    "preinstall": "rm -rf build/*",
+    "ci": "yarn lint && yarn build"
   },
   "repository": {
     "type": "git",
