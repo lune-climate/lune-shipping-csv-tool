@@ -8,11 +8,14 @@ This is done via using the [Lune API](https://docs.lune.co).
 
 ## How to install
 
-This utility is a NodeJS application and you should be able to run it on variety of OSes.
+This utility is a NodeJS application and you should be able to run it on variety of OSes
+(more details on this below).
 
 To install this utility and start using it, first perform the following steps:
 
 ### Installing from NPM (AKA "I just want to use the application")
+
+This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
 
 1. Install Node if you don't have it already: https://nodejs.org/en/
 2. Install lune-shipping-csv-tool globally via running command `npm install -g lune-shipping-csv-tool` in a command-line interpreter 
@@ -21,6 +24,8 @@ To install this utility and start using it, first perform the following steps:
 will result in an error `Please set the API_KEY environment variable`
 
 ### Running the development version (AKA "I want to see how it works or make some changes")
+
+This requires a Unix-like operating system (Linux, BSD, macOS, Windows with WSL etc.).
 
 1. Clone this repository
 2. Install Node if you don't have it already
