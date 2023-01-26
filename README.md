@@ -13,6 +13,8 @@ This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
 1. Install Node if you don't have it already: https://nodejs.org/en/
 2. Install lune-shipping-csv-tool globally via running command `npm install -g lune-shipping-csv-tool` in a command-line interpreter 
 (typically Terminal on OSX or Command Prompt on Windows)
+3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
+will result in an error `Please set the API_KEY environment variable`
 
 Now follow the [How to use](#how-to-use) instructions.
 
@@ -27,6 +29,7 @@ This requires a Unix-like operating system (Linux, BSD, macOS, Windows with WSL 
 2. Install Node if you don't have it already
 3. Install a package manager if you don't have it already
 4. Install all dependencies via  `npm install` or `yarn` depending on your package manager of choice
+5. Run the utility via `npm run start` or `yarn start` depending on your package manager of choice
 
 Now follow the [How to use](#how-to-use) instructions. Remember to mentally replace all
 `lune-csv-calculator` occurrences with `yarn start` (or `npm run start`, if you use `npm`) – you
