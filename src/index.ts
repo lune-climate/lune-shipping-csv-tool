@@ -144,8 +144,8 @@ const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, L
 
 const main = async () => {
     const pathToCSVFile = process.argv[2]
-    if (!process.env.API_KEY) {
-        console.log('Please set the API_KEY environment variable')
+    if (!process.env.LUNE_API_KEY) {
+        console.log('Please set the LUNE_API_KEY environment variable')
         return
     }
 
@@ -155,7 +155,7 @@ const main = async () => {
     }
 
     const parsedCSV: any[] = await parseCSV(pathToCSVFile)
-    const client = new LuneClient(process.env.API_KEY)
+    const client = new LuneClient(process.env.LUNE_API_KEY)
 
     const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
     progressBar.start(parsedCSV.length, 0)

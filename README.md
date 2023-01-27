@@ -14,7 +14,7 @@ This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
 2. Install lune-shipping-csv-tool globally via running command `npm install -g lune-shipping-csv-tool` in a command-line interpreter 
 (typically Terminal on OSX or Command Prompt on Windows)
 3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
-will result in an error `Please set the API_KEY environment variable`
+will result in an error `Please set the LUNE_API_KEY environment variable`
 
 Now follow the [How to use](#how-to-use) instructions.
 
@@ -44,15 +44,15 @@ This utility is a CLI application that parses a CSV file, makes a request to the
 new CSV file with the estimated CO2 emissions.
 
 You will need a valid Lune API key (you can generate one from https://dashboard.lune.co/developers) - it doesn't matter if 
-it's a live/test key. The application expects the API key to be provided to it via an `API_KEY`
+it's a live/test key. The application expects the API key to be provided to it via an `LUNE_API_KEY`
 environment variable:
 
 ```
 # Unix-like
-export API_KEY=<the API key secret goes here>
+export LUNE_API_KEY=<the API key secret goes here>
 
 # Windows
-set API_KEY=<The API key secret goes here>
+set LUNE_API_KEY=<The API key secret goes here>
 ```
 
 You will also need to create a CSV input file. Please examine [this existing file](https://github.com/lune-climate/lune-shipping-csv-tool/blob/master/input/sampleInput.csv)
