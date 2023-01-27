@@ -13,9 +13,9 @@ import {
     sleep,
     trimAndRemoveEmptyEntries,
     writeResultsToCSV,
-} from './utils'
+} from './utils.js'
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
-import { estimatePayload, EstimateResult, LegFromCSV } from './types'
+import { estimatePayload, EstimateResult, LegFromCSV } from './types.js'
 
 /**
  * Takes one journey (a single row from CSV)

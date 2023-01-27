@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "ESNext",
     "lib": ["es6"],
-    "module": "commonjs",
+    "module": "ESNext",
     "rootDir": "src",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "build",
