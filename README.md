@@ -70,18 +70,6 @@ The output file will appear in the current directory. If you want to define the 
 lune-csv-calculator <path to the input CSV file> -o <path to the output directory>
 ```
 
-Then to actually run the tool:
-
-```bash
-lune-csv-calculator <path to the input CSV file>
-```
-
-The output file will appear in the current directory. If you want to define the output directory:
-
-```bash
-lune-csv-calculator <path to the input CSV file> -o <path to the output directory>
-```
-
 ## The CSV Input format
 
 Each row in the CSV file represents a multi-leg journey. The following columns are always present: 
