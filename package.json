@@ -6,7 +6,7 @@
     "build": "tsc --build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run build && node build/index.js",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "fix": "eslint . --ext .ts --fix && prettier --config .prettierrc 'src/**/*.ts' --write",
     "lint": "eslint . --ext .ts && prettier --config .prettierrc --check 'src/**/*.ts'",
     "preinstall": "rm -rf build/*",
     "ci": "yarn lint && yarn build"
