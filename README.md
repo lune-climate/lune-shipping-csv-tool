@@ -18,8 +18,6 @@ will result in an error `Please set the LUNE_API_KEY environment variable`
 
 Now follow the [How to use](#how-to-use) instructions.
 
-Now follow the [How to use](#how-to-use) instructions.
-
 Run `npm update -g lune-shipping-csv-tool` to update the tool to the latest version (note
 that new versions may introduce some backwards-incompatible changes).
 
