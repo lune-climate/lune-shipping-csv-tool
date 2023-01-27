@@ -1,6 +1,10 @@
 lune-shipping-csv-tool
 ======================
 
+[![CI](https://github.com/lune-climate/lune-shipping-csv-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/lune-climate/lune-shipping-csv-tool/actions/workflows/ci.yml)
+[![NPM version](https://img.shields.io/npm/v/lune-shipping-csv-tool.svg)](https://npmjs.org/package/lune-shipping-csv-tool)
+Repository: https://github.com/lune-climate/lune-shipping-csv-tool
+
 ## Intro
 
 This is a simple utility that will help to estimate CO2 emissions (caused by shipping goods for example) of multi-leg shipments.
@@ -25,7 +29,7 @@ that new versions may introduce some backwards-incompatible changes).
 
 This requires a Unix-like operating system (Linux, BSD, macOS, Windows with WSL etc.).
 
-1. Clone this repository
+1. Clone this repository (https://github.com/lune-climate/lune-shipping-csv-tool)
 2. Install Node if you don't have it already
 3. Install a package manager if you don't have it already
 4. Install all dependencies via  `npm install` or `yarn` depending on your package manager of choice
