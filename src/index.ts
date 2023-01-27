@@ -43,6 +43,8 @@ function buildEstimatePayload(journey: Record<string, string>): estimatePayload 
         const containsLocation =
             leg.street || leg.postcode || leg.city || leg.country || leg.coordinates
         const containsDistance = leg.distance_km
+        // TODO see if this fallback is truly needed, it's possible it is
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         const nextLegContainsDistance = journeyGroupedIntoLegs[parseInt(number) + 1]?.distance_km
 
         if (!containsLocation && !containsDistance && !nextLegContainsDistance) {
@@ -126,6 +128,10 @@ function groupJourneyIntoLegs(journey: Record<string, string>): Record<number, L
             }
             const legAsInt = parseInt(legNumber)
             acc[legAsInt] = {
+                // acc[legAsInt] is always truthy per the type declarations
+                // so there'a s linting error we need to silence.
+                // TODO: Fix the types so this is not necessary
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 ...(acc[legAsInt] || {}),
                 [field]: value,
             }
@@ -135,6 +141,10 @@ function groupJourneyIntoLegs(journey: Record<string, string>): Record<number, L
         if (key.includes('pickup_')) {
             const field = key.replace('pickup_', '')
             acc[0] = {
+                // acc[legAsInt] is always truthy per the type declarations
+                // so there'a s linting error we need to silence.
+                // TODO: Fix the types so this is not necessary
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 ...(acc[0] || {}),
                 [field]: value,
             }
