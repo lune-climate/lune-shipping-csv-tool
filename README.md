@@ -16,6 +16,8 @@ This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
 3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
 will result in an error `Please set the API_KEY environment variable`
 
+Now follow the [How to use](#how-to-use) instructions.
+
 Run `npm update -g lune-shipping-csv-tool` to update the tool to the latest version (note
 that new versions may introduce some backwards-incompatible changes).
 
@@ -28,6 +30,10 @@ This requires a Unix-like operating system (Linux, BSD, macOS, Windows with WSL 
 3. Install a package manager if you don't have it already
 4. Install all dependencies via  `npm install` or `yarn` depending on your package manager of choice
 5. Run the utility via `npm run start` or `yarn start` depending on your package manager of choice
+
+Now follow the [How to use](#how-to-use) instructions. Remember to mentally replace all
+`lune-csv-calculator` occurrences with `yarn start` (or `npm run start`, if you use `npm`) – you
+are running the development version after all.
 
 Run `git` commands to update the local clone of the repository with the latest upstream changes
 (note that some of them may be backwards-incompatible).
@@ -50,7 +56,7 @@ set API_KEY=<The API key secret goes here>
 ```
 
 You will also need to create a CSV input file. Please examine [this existing file](https://github.com/lune-climate/lune-shipping-csv-tool/blob/master/input/sampleInput.csv)
-to understand the format.
+to understand the format. We have documented [The CSV Input format](#the-csv-input-format).
 
 Then to actually run the tool:
 
