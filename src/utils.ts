@@ -4,7 +4,6 @@ import fs from 'fs'
 import { Address, GeographicCoordinates } from '@lune-climate/lune'
 import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
 import { parse } from 'csv-parse'
-import { parse as parseSync } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
 
 import { EstimateResult, LegFromCSV } from './types.js'
@@ -90,65 +89,38 @@ export async function parseCSV(filename: string) {
 }
 
 export function writeResultsToCSV({
-    pathToShippingDataCSV,
+    inputs,
     results,
     outputFilePath,
 }: {
-    pathToShippingDataCSV: string
+    // TODO: Improve this type
+    inputs: Record<string, string>[]
     results: EstimateResult[]
     outputFilePath: string
 }) {
-    const parsedCSV = parseSync(fs.readFileSync(pathToShippingDataCSV))
-
-    const header = parsedCSV[0]
-    const estimateIdIndex = header.indexOf(Column.ESTIMATE_ID)
-    const totalMassIndex = header.indexOf(Column.TOTAL_MASS_TCO2)
-    const totalDistanceIndex = header.indexOf(Column.TOTAL_DISTANCE_KM)
-    const errorIndex = header.indexOf(Column.ERROR)
-
-    if (
-        estimateIdIndex === -1 ||
-        totalMassIndex === -1 ||
-        totalDistanceIndex === -1 ||
-        errorIndex === -1
-    ) {
-        throw new Error(
-            `Could not find one of the following required columns in Input CSV: ${Object.keys(
-                Column,
-            ).join(', ')}`,
-        )
-    }
+    // We'll be modifying the inputs inside – deep copy them so that our
+    // changes aren't visible outside this function.
+    inputs = inputs.map((i) => ({...i}))
 
     results.forEach((result, index) => {
-        const csvRow = parsedCSV[index + 1]
+        const csvRow = inputs[index]
 
         if ((result as { err: string }).err) {
-            csvRow[errorIndex] = (result as { err: string }).err
+            csvRow[Column.ERROR] = (result as { err: string }).err
         } else {
             const estimate = result as MultiLegShippingEmissionEstimate
-            csvRow[estimateIdIndex] = estimate.id
-            csvRow[totalMassIndex] = estimate.mass.amount
-            csvRow[totalDistanceIndex] = estimate.distance.amount
+            csvRow[Column.ESTIMATE_ID] = estimate.id
+            csvRow[Column.TOTAL_MASS_TCO2] = estimate.mass.amount
+            csvRow[Column.TOTAL_DISTANCE_KM] = estimate.distance.amount
 
             estimate.legs.forEach((leg, legIndex) => {
-                const indexOfLegEstimatedDistance = header.indexOf(
-                    `leg${legIndex + 1}_estimated_distance_km`,
-                )
-                const indexOfLegEstimatedMass = header.indexOf(`leg${legIndex + 1}_total_tco2`)
-
-                if (indexOfLegEstimatedDistance === -1 || indexOfLegEstimatedMass === -1) {
-                    throw new Error(
-                        `Could not one or more of required leg estimate result columns: ${indexOfLegEstimatedDistance} ${indexOfLegEstimatedMass}`,
-                    )
-                }
-
-                csvRow[indexOfLegEstimatedDistance] = leg.distance.amount
-                csvRow[indexOfLegEstimatedMass] = leg.mass.amount
+                csvRow[`leg${legIndex + 1}_estimated_distance_km`] = leg.distance.amount
+                csvRow[`leg${legIndex + 1}_total_tco2`] = leg.mass.amount
             })
         }
     })
 
-    fs.writeFileSync(outputFilePath, stringify(parsedCSV))
+    fs.writeFileSync(outputFilePath, stringify(inputs, { header: true }))
 }
 
 /**
