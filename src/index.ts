@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import cliProgress from 'cli-progress'
 import {
     ContainerShippingMethod,
     Distance,
@@ -7,6 +6,10 @@ import {
     MassUnit,
     SimpleShippingMethod,
 } from '@lune-climate/lune'
+import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
+import cliProgress from 'cli-progress'
+
+import { estimatePayload, EstimateResult, LegFromCSV } from './types'
 import {
     mapLegToLocation,
     parseCSV,
@@ -14,15 +17,13 @@ import {
     trimAndRemoveEmptyEntries,
     writeResultsToCSV,
 } from './utils.js'
-import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
-import { estimatePayload, EstimateResult, LegFromCSV } from './types.js'
 
 /**
  * Takes one journey (a single row from CSV)
  * Returns a payload object { shipment, legs } ready for Lune API createMultiLegShippingEstimate method
  * @param journey
  */
-const buildEstimatePayload = (journey: Record<string, string>): estimatePayload => {
+function buildEstimatePayload(journey: Record<string, string>): estimatePayload {
     const trimmedJourney = trimAndRemoveEmptyEntries(journey)
 
     if (!trimmedJourney.mass_kg && !trimmedJourney.containers) {
@@ -113,8 +114,8 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
  * }
  * @param journey
  */
-const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, LegFromCSV> =>
-    Object.entries(journey).reduce((acc, [key, value]) => {
+function groupJourneyIntoLegs(journey: Record<string, string>): Record<number, LegFromCSV> {
+    return Object.entries(journey).reduce((acc, [key, value]) => {
         if (key.includes('leg')) {
             // split only on first occurrence of '_'
             const [leg, field] = key.split(/_(.*)/s)
@@ -141,8 +142,9 @@ const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, L
 
         return acc
     }, {} as Record<number, LegFromCSV>)
+}
 
-const main = async () => {
+async function main() {
     const pathToCSVFile = process.argv[2]
     if (!process.env.LUNE_API_KEY) {
         console.log('Please set the LUNE_API_KEY environment variable')
@@ -188,7 +190,7 @@ const main = async () => {
             // Other 4xx errors are definitely not good for retrying, they're a sign of
             // programming errors or input data issues and need to be fixed on our side.
             const description =
-                (apiError as ApiError)?.description || apiError.errors?.errors[0].toString()
+                (apiError as ApiError).description || apiError.errors?.errors[0].toString()
             if (!shouldRetry) {
                 console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
                 // TODO: This type assertion shouldn't be necessary, we won't ever get
