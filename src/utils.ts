@@ -21,8 +21,8 @@ enum Column {
  * Remove any entries with a falsy key or value (i.e. empty string or null)
  * @param journey
  */
-export const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
-    Object.entries(journey).reduce((acc, [key, value]) => {
+export function trimAndRemoveEmptyEntries(journey: Record<string, string>) {
+    return Object.entries(journey).reduce((acc, [key, value]) => {
         const trimmedKey = key.trim()
         const trimmedValue = value.trim()
         if (trimmedKey && trimmedValue) {
@@ -30,8 +30,9 @@ export const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
         }
         return acc
     }, {} as Record<string, string>)
+}
 
-export const mapLegToLocation = (leg: LegFromCSV): Address | GeographicCoordinates => {
+export function mapLegToLocation(leg: LegFromCSV): Address | GeographicCoordinates {
     if (leg.coordinates) {
         return parseCoordinates(leg.coordinates)
     } else {

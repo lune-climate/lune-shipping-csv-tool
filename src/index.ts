@@ -22,7 +22,7 @@ import { estimatePayload, EstimateResult, LegFromCSV } from './types'
  * Returns a payload object { shipment, legs } ready for Lune API createMultiLegShippingEstimate method
  * @param journey
  */
-const buildEstimatePayload = (journey: Record<string, string>): estimatePayload => {
+function buildEstimatePayload(journey: Record<string, string>): estimatePayload {
     const trimmedJourney = trimAndRemoveEmptyEntries(journey)
 
     if (!trimmedJourney.mass_kg && !trimmedJourney.containers) {
@@ -113,8 +113,8 @@ const buildEstimatePayload = (journey: Record<string, string>): estimatePayload 
  * }
  * @param journey
  */
-const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, LegFromCSV> =>
-    Object.entries(journey).reduce((acc, [key, value]) => {
+function groupJourneyIntoLegs(journey: Record<string, string>): Record<number, LegFromCSV> {
+    return Object.entries(journey).reduce((acc, [key, value]) => {
         if (key.includes('leg')) {
             // split only on first occurrence of '_'
             const [leg, field] = key.split(/_(.*)/s)
@@ -141,8 +141,9 @@ const groupJourneyIntoLegs = (journey: Record<string, string>): Record<number, L
 
         return acc
     }, {} as Record<number, LegFromCSV>)
+}
 
-const main = async () => {
+async function main() {
     const pathToCSVFile = process.argv[2]
     if (!process.env.LUNE_API_KEY) {
         console.log('Please set the LUNE_API_KEY environment variable')
