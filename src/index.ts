@@ -6,7 +6,6 @@ import {
     MassUnit,
     SimpleShippingMethod,
 } from '@lune-climate/lune'
-import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import cliProgress from 'cli-progress'
 
 import { estimatePayload, EstimateResult, LegFromCSV } from './types.js'
@@ -189,8 +188,7 @@ async function main() {
                     statusCode === 429)
             // Other 4xx errors are definitely not good for retrying, they're a sign of
             // programming errors or input data issues and need to be fixed on our side.
-            const description =
-                (apiError as ApiError).description || apiError.errors?.errors[0].toString()
+            const description = apiError.description || apiError.errors?.errors[0].toString()
             if (!shouldRetry) {
                 console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
                 // TODO: This type assertion shouldn't be necessary, we won't ever get
