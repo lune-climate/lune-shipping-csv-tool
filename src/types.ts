@@ -1,8 +1,10 @@
-import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
-import { Shipment } from '@lune-climate/lune/esm/models/Shipment'
-import { ShippingCountryCode } from '@lune-climate/lune/esm/models/ShippingCountryCode'
-import { ShippingMethod } from '@lune-climate/lune/esm/models/ShippingMethod'
-import { ShippingRoute } from '@lune-climate/lune/esm/models/ShippingRoute'
+import {
+    MultiLegShippingEmissionEstimate,
+    Shipment,
+    ShippingCountryCode,
+    ShippingMethod,
+    ShippingRoute,
+} from '@lune-climate/lune'
 
 export type estimatePayload = {
     shipment: Shipment
