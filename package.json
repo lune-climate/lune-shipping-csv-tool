@@ -27,7 +27,7 @@
     "@lune-climate/lune": "^2.2.4",
     "cli-progress": "^3.11.2",
     "csv-parse": "^5.3.3",
-    "csv-stringify": "^6.2.0",
+    "csv-stringify": "^6.2.3",
     "minimist": "^1.2.7"
   },
   "devDependencies": {
