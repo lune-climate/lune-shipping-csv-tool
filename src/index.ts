@@ -190,7 +190,7 @@ async function main() {
             // Other 4xx errors are definitely not good for retrying, they're a sign of
             // programming errors or input data issues and need to be fixed on our side.
             const description =
-                (apiError as ApiError)?.description || apiError.errors?.errors[0].toString()
+                (apiError as ApiError).description || apiError.errors?.errors[0].toString()
             if (!shouldRetry) {
                 console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
                 // TODO: This type assertion shouldn't be necessary, we won't ever get

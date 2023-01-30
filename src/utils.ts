@@ -157,7 +157,7 @@ export function writeResultsToCSV({
         })
     }
 
-    fs.writeFileSync(`${argv?.o || '.'}/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
+    fs.writeFileSync(`${argv.o || '.'}/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
 }
 
 /**
