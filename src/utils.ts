@@ -1,13 +1,15 @@
 import { createReadStream } from 'fs'
+import fs from 'fs'
+import path from 'path'
+
+import { Address, GeographicCoordinates } from '@lune-climate/lune'
+import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
 import { parse } from 'csv-parse'
 import { parse as parseSync } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
-import fs from 'fs'
-import { EstimateResult, LegFromCSV } from './types'
-import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
-import { Address, GeographicCoordinates } from '@lune-climate/lune'
-import path from 'path'
 import minimist from 'minimist'
+
+import { EstimateResult, LegFromCSV } from './types'
 
 enum Column {
     ESTIMATE_ID = 'estimate_id',

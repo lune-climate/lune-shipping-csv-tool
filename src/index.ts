@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import cliProgress from 'cli-progress'
 import {
     ContainerShippingMethod,
     Distance,
@@ -7,6 +6,10 @@ import {
     MassUnit,
     SimpleShippingMethod,
 } from '@lune-climate/lune'
+import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
+import cliProgress from 'cli-progress'
+
+import { estimatePayload, EstimateResult, LegFromCSV } from './types'
 import {
     mapLegToLocation,
     parseCSV,
@@ -14,8 +17,6 @@ import {
     trimAndRemoveEmptyEntries,
     writeResultsToCSV,
 } from './utils'
-import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
-import { estimatePayload, EstimateResult, LegFromCSV } from './types'
 
 /**
  * Takes one journey (a single row from CSV)
