@@ -9,7 +9,7 @@ import {
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import cliProgress from 'cli-progress'
 
-import { estimatePayload, EstimateResult, LegFromCSV } from './types'
+import { estimatePayload, EstimateResult, LegFromCSV } from './types.js'
 import {
     mapLegToLocation,
     parseCSV,

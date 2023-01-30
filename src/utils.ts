@@ -9,7 +9,7 @@ import { parse as parseSync } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
 import minimist from 'minimist'
 
-import { EstimateResult, LegFromCSV } from './types'
+import { EstimateResult, LegFromCSV } from './types.js'
 
 enum Column {
     ESTIMATE_ID = 'estimate_id',
