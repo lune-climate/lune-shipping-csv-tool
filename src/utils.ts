@@ -7,6 +7,7 @@ import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/
 import { parse } from 'csv-parse'
 import { parse as parseSync } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
+import minimist from 'minimist'
 
 import { EstimateResult, LegFromCSV } from './types'
 
