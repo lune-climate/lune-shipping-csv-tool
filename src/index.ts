@@ -9,14 +9,14 @@ import {
 import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import cliProgress from 'cli-progress'
 
-import { estimatePayload, EstimateResult, LegFromCSV } from './types'
+import { estimatePayload, EstimateResult, LegFromCSV } from './types.js'
 import {
     mapLegToLocation,
     parseCSV,
     sleep,
     trimAndRemoveEmptyEntries,
     writeResultsToCSV,
-} from './utils'
+} from './utils.js'
 
 /**
  * Takes one journey (a single row from CSV)
