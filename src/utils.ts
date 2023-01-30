@@ -1,13 +1,15 @@
 import { createReadStream } from 'fs'
+import fs from 'fs'
+import path from 'path'
+
+import { Address, GeographicCoordinates } from '@lune-climate/lune'
+import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
 import { parse } from 'csv-parse'
 import { parse as parseSync } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
-import fs from 'fs'
-import { EstimateResult, LegFromCSV } from './types'
-import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
-import { Address, GeographicCoordinates } from '@lune-climate/lune'
-import path from 'path'
 import minimist from 'minimist'
+
+import { EstimateResult, LegFromCSV } from './types'
 
 enum Column {
     ESTIMATE_ID = 'estimate_id',
@@ -21,8 +23,8 @@ enum Column {
  * Remove any entries with a falsy key or value (i.e. empty string or null)
  * @param journey
  */
-export const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
-    Object.entries(journey).reduce((acc, [key, value]) => {
+export function trimAndRemoveEmptyEntries(journey: Record<string, string>) {
+    return Object.entries(journey).reduce((acc, [key, value]) => {
         const trimmedKey = key.trim()
         const trimmedValue = value.trim()
         if (trimmedKey && trimmedValue) {
@@ -30,8 +32,9 @@ export const trimAndRemoveEmptyEntries = (journey: Record<string, string>) =>
         }
         return acc
     }, {} as Record<string, string>)
+}
 
-export const mapLegToLocation = (leg: LegFromCSV): Address | GeographicCoordinates => {
+export function mapLegToLocation(leg: LegFromCSV): Address | GeographicCoordinates {
     if (leg.coordinates) {
         return parseCoordinates(leg.coordinates)
     } else {
@@ -154,7 +157,7 @@ export function writeResultsToCSV({
         })
     }
 
-    fs.writeFileSync(`${argv?.o || '.'}/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
+    fs.writeFileSync(`${argv.o || '.'}/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
 }
 
 /**
