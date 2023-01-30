@@ -100,7 +100,7 @@ export function writeResultsToCSV({
 }) {
     // We'll be modifying the inputs inside – deep copy them so that our
     // changes aren't visible outside this function.
-    inputs = inputs.map((i) => ({...i}))
+    inputs = inputs.map((i) => ({ ...i }))
 
     results.forEach((result, index) => {
         const csvRow = inputs[index]
