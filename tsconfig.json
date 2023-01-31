@@ -6,6 +6,7 @@
     "rootDir": "src",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
+    "allowJs": true,
     "outDir": "build",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
