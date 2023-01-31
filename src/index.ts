@@ -6,7 +6,6 @@ import {
     MassUnit,
     SimpleShippingMethod,
 } from '@lune-climate/lune'
-import { ApiError } from '@lune-climate/lune/cjs/core/ApiError'
 import cliProgress from 'cli-progress'
 import fs from 'fs'
 import minimist from 'minimist'
@@ -46,6 +45,8 @@ function buildEstimatePayload(journey: Record<string, string>): estimatePayload 
         const containsLocation =
             leg.street || leg.postcode || leg.city || leg.country || leg.coordinates
         const containsDistance = leg.distance_km
+        // TODO see if this fallback is truly needed, it's possible it is
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         const nextLegContainsDistance = journeyGroupedIntoLegs[parseInt(number) + 1]?.distance_km
 
         if (!containsLocation && !containsDistance && !nextLegContainsDistance) {
@@ -129,6 +130,10 @@ function groupJourneyIntoLegs(journey: Record<string, string>): Record<number, L
             }
             const legAsInt = parseInt(legNumber)
             acc[legAsInt] = {
+                // acc[legAsInt] is always truthy per the type declarations
+                // so there'a s linting error we need to silence.
+                // TODO: Fix the types so this is not necessary
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 ...(acc[legAsInt] || {}),
                 [field]: value,
             }
@@ -138,6 +143,10 @@ function groupJourneyIntoLegs(journey: Record<string, string>): Record<number, L
         if (key.includes('pickup_')) {
             const field = key.replace('pickup_', '')
             acc[0] = {
+                // acc[legAsInt] is always truthy per the type declarations
+                // so there'a s linting error we need to silence.
+                // TODO: Fix the types so this is not necessary
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 ...(acc[0] || {}),
                 [field]: value,
             }
@@ -192,8 +201,7 @@ async function main() {
                     statusCode === 429)
             // Other 4xx errors are definitely not good for retrying, they're a sign of
             // programming errors or input data issues and need to be fixed on our side.
-            const description =
-                (apiError as ApiError).description || apiError.errors?.errors[0].toString()
+            const description = apiError.description || apiError.errors?.errors[0].toString()
             if (!shouldRetry) {
                 console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
                 // TODO: This type assertion shouldn't be necessary, we won't ever get

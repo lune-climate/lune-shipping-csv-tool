@@ -1,8 +1,11 @@
 import { createReadStream } from 'fs'
 import fs from 'fs'
 
-import { Address, GeographicCoordinates } from '@lune-climate/lune'
-import { MultiLegShippingEmissionEstimate } from '@lune-climate/lune/esm/models/MultiLegShippingEmissionEstimate'
+import {
+    Address,
+    GeographicCoordinates,
+    MultiLegShippingEmissionEstimate,
+} from '@lune-climate/lune'
 import { parse } from 'csv-parse'
 import { stringify } from 'csv-stringify/sync'
 
