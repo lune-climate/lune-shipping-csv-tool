@@ -54,7 +54,7 @@ export function mapLegToLocation(leg: LegFromCSV): Address | GeographicCoordinat
  *
  * @param coordinates A string of the following form: "lat <number> lon <number>"
  */
-function parseCoordinates(coordinates: string): GeographicCoordinates {
+export function parseCoordinates(coordinates: string): GeographicCoordinates {
     function bail() {
         throw new Error(
             `Coordinates must be formatted like this: "lat 12.345 lon -12.345", got: "${coordinates}"`,
