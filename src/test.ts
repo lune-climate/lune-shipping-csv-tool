@@ -1,10 +1,5 @@
 import { parseCoordinates } from './utils.js'
 
-// TODO: Remove when this is no longer needed
-test('Dummy test', () => {
-    // Boo
-})
-
 describe('parseCoordinates', () => {
     test('Should parse valid input correctly', () => {
         expect(parseCoordinates('lat 12.34 lon 56.78')).toEqual({
