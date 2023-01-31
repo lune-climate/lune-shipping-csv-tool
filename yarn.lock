@@ -36,10 +36,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@lune-climate/lune@^2.2.4":
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/@lune-climate/lune/-/lune-2.2.4.tgz#39800d9027218cf99d787d2e0cdac1752bcbd0de"
-  integrity sha512-GHrHNGsCXg3XGm8JjRN+ZWSQjJo36u+PA3fcfZAFswnz06NM5UGXXZWLl9tH8eLJ8rsgOYp0fpNn+ukvdoV1qA==
+"@lune-climate/lune@^2.2.5":
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/@lune-climate/lune/-/lune-2.2.5.tgz#345b5b41ee9d71062920874c1be57601055262bb"
+  integrity sha512-ojN+FBtbW0/gdQBvdigUnKygf/vaiue0O6Q/TGvuJqBsACwH8MdAQ7FwiOwiwAeI4ilisDNuWod5QvpMFCYGXA==
   dependencies:
     axios "^0.21.1"
     camelcase-keys "^6.2.2"
