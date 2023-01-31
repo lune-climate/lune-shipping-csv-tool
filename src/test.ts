@@ -17,7 +17,7 @@ describe('parseCoordinates', () => {
         'lat a lon 12',
         'lat 12 lon 12 foo',
         'a b c d',
-    ])('Should reject invalid inuts', (input) => {
+    ])('Should reject invalid inputs', (input) => {
         expect(() => parseCoordinates(input)).toThrow()
     })
 })
