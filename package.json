@@ -10,7 +10,7 @@
     "fix": "eslint . --ext .ts --fix",
     "lint": "eslint . --ext .ts",
     "preinstall": "rm -rf build/*",
-    "ci": "yarn lint && yarn test"
+    "ci": "yarn lint && yarn test --coverage"
   },
   "repository": {
     "type": "git",
