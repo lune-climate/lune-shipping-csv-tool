@@ -1,6 +1,5 @@
 import { createReadStream } from 'fs'
 import fs from 'fs'
-import path from 'path'
 
 import {
     Address,
@@ -10,7 +9,6 @@ import {
 import { parse } from 'csv-parse'
 import { parse as parseSync } from 'csv-parse/sync'
 import { stringify } from 'csv-stringify/sync'
-import minimist from 'minimist'
 
 import { EstimateResult, LegFromCSV } from './types.js'
 
@@ -97,9 +95,11 @@ export async function parseCSV(filename: string) {
 export function writeResultsToCSV({
     pathToShippingDataCSV,
     results,
+    outputFilePath,
 }: {
     pathToShippingDataCSV: string
     results: EstimateResult[]
+    outputFilePath: string
 }) {
     const parsedCSV = parseSync(fs.readFileSync(pathToShippingDataCSV))
 
@@ -151,16 +151,7 @@ export function writeResultsToCSV({
         }
     })
 
-    const argv = minimist(process.argv.slice(2))
-    const nameOfCSVFile = path.parse(process.argv[2]).name
-
-    if (argv.o && !fs.existsSync(argv.o)) {
-        fs.mkdirSync(argv.o, {
-            recursive: true,
-        })
-    }
-
-    fs.writeFileSync(`${argv.o || '.'}/${nameOfCSVFile}_${Date.now()}.csv`, stringify(parsedCSV))
+    fs.writeFileSync(outputFilePath, stringify(parsedCSV))
 }
 
 /**
