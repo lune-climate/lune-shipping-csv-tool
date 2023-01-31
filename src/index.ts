@@ -157,7 +157,7 @@ function groupJourneyIntoLegs(journey: Record<string, string>): Record<number, L
     }, {} as Record<number, LegFromCSV>)
 }
 
-async function main() {
+async function main(): Promise<void> {
     const pathToCSVFile = process.argv[2]
     if (!process.env.LUNE_API_KEY) {
         console.log('Please set the LUNE_API_KEY environment variable')
