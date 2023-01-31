@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+import fs from 'fs'
+import path from 'path'
+
 import {
     ContainerShippingMethod,
     Distance,
@@ -7,9 +10,7 @@ import {
     SimpleShippingMethod,
 } from '@lune-climate/lune'
 import cliProgress from 'cli-progress'
-import fs from 'fs'
 import minimist from 'minimist'
-import path from 'path'
 
 import { estimatePayload, EstimateResult, LegFromCSV } from './types.js'
 import {
