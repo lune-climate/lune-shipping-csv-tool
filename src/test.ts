@@ -7,7 +7,7 @@ test('Dummy test', () => {
 
 describe('parseCoordinates', () => {
     test('Should parse valid input correctly', () => {
-        expect(parseCoordinates("lat 12.34 lon 56.78")).toEqual({
+        expect(parseCoordinates('lat 12.34 lon 56.78')).toEqual({
             lat: 12.34,
             lon: 56.78,
         })
