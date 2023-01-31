@@ -23,7 +23,7 @@ enum Column {
  * Remove any entries with a falsy key or value (i.e. empty string or null)
  * @param journey
  */
-export function trimAndRemoveEmptyEntries(journey: Record<string, string>) {
+export function trimAndRemoveEmptyEntries(journey: Record<string, string>): Record<string, string> {
     return Object.entries(journey).reduce((acc, [key, value]) => {
         const trimmedKey = key.trim()
         const trimmedValue = value.trim()
@@ -55,7 +55,7 @@ export function mapLegToLocation(leg: LegFromCSV): Address | GeographicCoordinat
  * @param coordinates A string of the following form: "lat <number> lon <number>"
  */
 function parseCoordinates(coordinates: string): GeographicCoordinates {
-    function bail() {
+    function bail(): never {
         throw new Error(
             `Coordinates must be formatted like this: "lat 12.345 lon -12.345", got: "${coordinates}"`,
         )
@@ -77,7 +77,7 @@ function parseCoordinates(coordinates: string): GeographicCoordinates {
     return { lat, lon }
 }
 
-export async function parseCSV(filename: string) {
+export async function parseCSV(filename: string): Promise<any[]> {
     const promise = new Promise((resolve, reject) => {
         createReadStream(filename).pipe(
             parse(
@@ -100,7 +100,7 @@ export function writeResultsToCSV({
     inputs: Record<string, string>[]
     results: EstimateResult[]
     outputFilePath: string
-}) {
+}): void {
     // We'll be modifying the inputs inside – deep copy them so that our
     // changes aren't visible outside this function.
     inputs = inputs.map((i) => ({ ...i }))
