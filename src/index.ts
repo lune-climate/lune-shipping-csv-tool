@@ -237,7 +237,7 @@ async function main() {
     }
 
     writeResultsToCSV({
-        pathToShippingDataCSV: pathToCSVFile,
+        inputs: parsedCSV,
         results: estimates,
         outputFilePath,
     })
