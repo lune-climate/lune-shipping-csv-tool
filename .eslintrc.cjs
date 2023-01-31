@@ -33,6 +33,7 @@ module.exports = {
     "no-unused-vars": "off",
     "no-extra-semi": "off",
     "no-trailing-spaces": "error",
+    "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/no-useless-constructor": ["error"],
     "@typescript-eslint/no-unnecessary-type-assertion": ["error"],
     "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
