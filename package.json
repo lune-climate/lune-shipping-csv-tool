@@ -42,7 +42,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.5"
   },
   "bin": {
     "lune-csv-calculator": "./build/index.js"
