@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/lune-climate/lune-csv-calculator#readme",
   "dependencies": {
-    "@lune-climate/lune": "^2.2.5",
+    "@lune-climate/lune": "^2.2.6",
     "cli-progress": "^3.11.2",
     "csv-parse": "^5.3.4",
     "csv-stringify": "^6.2.3",
