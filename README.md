@@ -18,7 +18,7 @@ This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
 
 1. Install Node if you don't have it already: https://nodejs.org/en/
 2. Install lune-shipping-csv-tool globally via running command `npm install -g lune-shipping-csv-tool` in a command-line interpreter 
-(typically Terminal on OSX or Command Prompt on Windows)
+(typically Terminal on OSX or Command Prompt on Windows). If you get a `EACCES: permission denied` error, prefix the above command with `sudo.`
 3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
 will result in an error `Please set the LUNE_API_KEY environment variable`
 
