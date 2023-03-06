@@ -9,20 +9,19 @@
     "start": "npm run build && node build/index.js",
     "fix": "eslint . --ext .ts --fix",
     "lint": "eslint . --ext .ts",
-    "preinstall": "rm -rf build/*",
     "ci": "yarn lint && yarn test --coverage --collectCoverageFrom='./src/**'"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lune-climate/lune-csv-calculator.git"
+    "url": "git+https://github.com/lune-climate/lune-shipping-csv-tool.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/lune-climate/lune-csv-calculator/issues"
+    "url": "https://github.com/lune-climate/lune-shipping-csv-tool/issues"
   },
-  "homepage": "https://github.com/lune-climate/lune-csv-calculator#readme",
+  "homepage": "https://github.com/lune-climate/lune-shipping-csv-tool#readme",
   "dependencies": {
     "@lune-climate/lune": "^2.2.7",
     "cli-progress": "^3.12.0",
@@ -49,6 +48,6 @@
     "typescript": "^4.9.5"
   },
   "bin": {
-    "lune-csv-calculator": "./build/index.js"
+    "lune-shipping-csv-tool": "./build/index.js"
   }
 }

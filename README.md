@@ -22,7 +22,7 @@ This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
     * If you get a `EACCES: permission denied` error, there are multiple ways to solve the issue, pick one:
         1. follow instructions [here](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally).
         2. prefix the above command with `sudo`, to run the above command as Super User.
-3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
+3. If the installation was successfully you should be able to run `lune-shipping-csv-tool` in the command-line interpreter although this
 will result in an error `Please set the LUNE_API_KEY environment variable`
 
 Now follow the [How to use](#how-to-use) instructions.
@@ -41,7 +41,7 @@ This requires a Unix-like operating system (Linux, BSD, macOS, Windows with WSL 
 5. Run the utility via `npm run start` or `yarn start` depending on your package manager of choice
 
 Now follow the [How to use](#how-to-use) instructions. Remember to mentally replace all
-`lune-csv-calculator` occurrences with `yarn start` (or `npm run start`, if you use `npm`) – you
+`lune-shipping-csv-tool` occurrences with `yarn start` (or `npm run start`, if you use `npm`) – you
 are running the development version after all.
 
 Run `git` commands to update the local clone of the repository with the latest upstream changes
@@ -70,13 +70,13 @@ to understand the format. We have documented [The CSV Input format](#the-csv-inp
 Then to actually run the tool:
 
 ```bash
-lune-csv-calculator <path to the input CSV file>
+lune-shipping-csv-tool <path to the input CSV file>
 ```
 
 The output file will appear in the current directory. If you want to define the output directory:
 
 ```bash
-lune-csv-calculator <path to the input CSV file> -o <path to the output directory>
+lune-shipping-csv-tool <path to the input CSV file> -o <path to the output directory>
 ```
 
 ## The CSV Input format
