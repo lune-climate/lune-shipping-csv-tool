@@ -202,12 +202,21 @@ async function main(): Promise<void> {
                     statusCode === 429)
             // Other 4xx errors are definitely not good for retrying, they're a sign of
             // programming errors or input data issues and need to be fixed on our side.
-            const description = apiError.description || apiError.errors?.errors[0].toString()
+            const description = [
+                apiError.description,
+                ...[
+                    ...[
+                        (apiError.errors?.errors ?? []).map(
+                            ({ errorCode, message }) => `${errorCode}: ${message}`,
+                        ),
+                    ],
+                ],
+            ].join('; ')
             if (!shouldRetry) {
                 console.log(`Failed to create estimate for ${journey.shipment_id}: `, description)
                 // TODO: This type assertion shouldn't be necessary, we won't ever get
                 // undefined here
-                estimates.push({ err: description as string })
+                estimates.push({ err: description })
                 break
             }
 
