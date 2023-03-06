@@ -205,11 +205,9 @@ async function main(): Promise<void> {
             const description = [
                 apiError.description,
                 ...[
-                    ...[
-                        (apiError.errors?.errors ?? []).map(
-                            ({ errorCode, message }) => `${errorCode}: ${message}`,
-                        ),
-                    ],
+                    (apiError.errors?.errors ?? []).map(
+                        ({ errorCode, message }) => `${errorCode}: ${message}`,
+                    ),
                 ],
             ].join('; ')
             if (!shouldRetry) {
