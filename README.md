@@ -21,7 +21,7 @@ This is supported on Unix-like (Linux, BSD, macOS etc.) and Windows.
 (typically Terminal on OSX or Command Prompt on Windows).
     * If you get a `EACCES: permission denied` error, there are multiple ways to solve the issue, pick one:
         1. follow instructions [here](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally).
-        2. prefix the above command with `sudo.`
+        2. prefix the above command with `sudo`, to run the above command as Super User.
 3. If the installation was successfully you should be able to run `lune-csv-calculator` in the command-line interpreter although this
 will result in an error `Please set the LUNE_API_KEY environment variable`
 
