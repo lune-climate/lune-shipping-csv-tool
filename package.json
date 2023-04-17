@@ -45,7 +45,7 @@
     "jest": "^29.5.0",
     "nodemon": "^2.0.22",
     "prettier": "^2.8.7",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "bin": {
     "lune-shipping-csv-tool": "./build/index.js"
