@@ -615,10 +615,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@lune-climate/lune@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@lune-climate/lune/-/lune-2.5.0.tgz#52134cce1e7b613fe58bbe85ee4f56efd793b236"
-  integrity sha512-vLhU/sEPhEKTRZo2u6/dPmEYt6oI4HmyId/chGvj9VwtbOhqKq0fCg9Qu4aBAq293zdv9SSla8qC291IaykIxw==
+"@lune-climate/lune@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@lune-climate/lune/-/lune-2.5.1.tgz#89cc9331fc0e907af055800fbba344c2e0879e5f"
+  integrity sha512-AWrAdDzwjS2CvRuNu0yP/i0roFEcpnflvPZbhjjG6r8tFBUFO9zZcqZbTaF526GI59rZ6T/0TfuNWx3ndAvf9A==
   dependencies:
     axios "^0.21.1"
     camelcase-keys "^6.2.2"
