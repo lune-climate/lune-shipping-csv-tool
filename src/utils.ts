@@ -24,14 +24,17 @@ enum Column {
  * @param journey
  */
 export function trimAndRemoveEmptyEntries(journey: Record<string, string>): Record<string, string> {
-    return Object.entries(journey).reduce((acc, [key, value]) => {
-        const trimmedKey = key.trim()
-        const trimmedValue = value.trim()
-        if (trimmedKey && trimmedValue) {
-            acc[trimmedKey] = trimmedValue
-        }
-        return acc
-    }, {} as Record<string, string>)
+    return Object.entries(journey).reduce(
+        (acc, [key, value]) => {
+            const trimmedKey = key.trim()
+            const trimmedValue = value.trim()
+            if (trimmedKey && trimmedValue) {
+                acc[trimmedKey] = trimmedValue
+            }
+            return acc
+        },
+        {} as Record<string, string>,
+    )
 }
 
 export function mapLegToLocation(leg: LegFromCSV): Address | GeographicCoordinates {
