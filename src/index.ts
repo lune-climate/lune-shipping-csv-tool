@@ -120,41 +120,44 @@ function buildEstimatePayload(journey: Record<string, string>): estimatePayload 
  * @param journey
  */
 function groupJourneyIntoLegs(journey: Record<string, string>): Record<number, LegFromCSV> {
-    return Object.entries(journey).reduce((acc, [key, value]) => {
-        if (key.includes('leg')) {
-            // split only on first occurrence of '_'
-            const [leg, field] = key.split(/_(.*)/s)
-            const legNumber = leg.replace('leg', '')
+    return Object.entries(journey).reduce(
+        (acc, [key, value]) => {
+            if (key.includes('leg')) {
+                // split only on first occurrence of '_'
+                const [leg, field] = key.split(/_(.*)/s)
+                const legNumber = leg.replace('leg', '')
 
-            if (!legNumber) {
-                throw new Error(`Could not parse leg number from key: ${key}`)
+                if (!legNumber) {
+                    throw new Error(`Could not parse leg number from key: ${key}`)
+                }
+                const legAsInt = parseInt(legNumber)
+                acc[legAsInt] = {
+                    // acc[legAsInt] is always truthy per the type declarations
+                    // so there'a s linting error we need to silence.
+                    // TODO: Fix the types so this is not necessary
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    ...(acc[legAsInt] || {}),
+                    [field]: value,
+                }
             }
-            const legAsInt = parseInt(legNumber)
-            acc[legAsInt] = {
-                // acc[legAsInt] is always truthy per the type declarations
-                // so there'a s linting error we need to silence.
-                // TODO: Fix the types so this is not necessary
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                ...(acc[legAsInt] || {}),
-                [field]: value,
-            }
-        }
 
-        // Pickup entries server as leg 0
-        if (key.includes('pickup_')) {
-            const field = key.replace('pickup_', '')
-            acc[0] = {
-                // acc[legAsInt] is always truthy per the type declarations
-                // so there'a s linting error we need to silence.
-                // TODO: Fix the types so this is not necessary
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                ...(acc[0] || {}),
-                [field]: value,
+            // Pickup entries server as leg 0
+            if (key.includes('pickup_')) {
+                const field = key.replace('pickup_', '')
+                acc[0] = {
+                    // acc[legAsInt] is always truthy per the type declarations
+                    // so there'a s linting error we need to silence.
+                    // TODO: Fix the types so this is not necessary
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                    ...(acc[0] || {}),
+                    [field]: value,
+                }
             }
-        }
 
-        return acc
-    }, {} as Record<number, LegFromCSV>)
+            return acc
+        },
+        {} as Record<number, LegFromCSV>,
+    )
 }
 
 async function main(): Promise<void> {
