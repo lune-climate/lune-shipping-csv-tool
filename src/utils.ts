@@ -120,7 +120,8 @@ export function writeResultsToCSV({
             csvRow[Column.TOTAL_DISTANCE_KM] = estimate.distance.amount
 
             estimate.legs.forEach((leg, legIndex) => {
-                csvRow[`leg${legIndex + 1}_estimated_distance_km`] = leg.distance.amount
+                csvRow[`leg${legIndex + 1}_estimated_distance_km`] =
+                    leg.distance !== undefined ? leg.distance.amount : ''
                 csvRow[`leg${legIndex + 1}_total_tco2`] = leg.mass.amount
             })
         }
