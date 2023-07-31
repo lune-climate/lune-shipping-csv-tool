@@ -122,7 +122,7 @@ export function writeResultsToCSV({
             csvRow[Column.TOTAL_DISTANCE_KM] = estimate.distance.amount
 
             estimate.legs.forEach((leg, legIndex) => {
-                let distance: string = ''
+                let distance = ''
                 if (leg.distance !== undefined) {
                     if (leg.distance.unit !== Distance.unit.KM) {
                         throw new Error(`Unexpected distance unit ${leg.distance.unit} returned`)
