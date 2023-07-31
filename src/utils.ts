@@ -3,7 +3,9 @@ import fs from 'fs'
 
 import {
     Address,
+    Distance,
     GeographicCoordinates,
+    MassUnit,
     MultiLegShippingEmissionEstimate,
 } from '@lune-climate/lune'
 import { parse } from 'csv-parse'
@@ -120,8 +122,17 @@ export function writeResultsToCSV({
             csvRow[Column.TOTAL_DISTANCE_KM] = estimate.distance.amount
 
             estimate.legs.forEach((leg, legIndex) => {
-                csvRow[`leg${legIndex + 1}_estimated_distance_km`] =
-                    leg.distance !== undefined ? leg.distance.amount : ''
+                let distance: string = ''
+                if (leg.distance !== undefined) {
+                    if (leg.distance.unit !== Distance.unit.KM) {
+                        throw new Error(`Unexpected distance unit ${leg.distance.unit} returned`)
+                    }
+                    distance = leg.distance.amount
+                }
+                csvRow[`leg${legIndex + 1}_estimated_distance_km`] = distance
+                if (leg.mass.unit !== MassUnit.T) {
+                    throw new Error(`Unexpected mass unit ${leg.mass.unit} returned`)
+                }
                 csvRow[`leg${legIndex + 1}_total_tco2`] = leg.mass.amount
             })
         }
