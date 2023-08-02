@@ -175,6 +175,27 @@ async function main(): Promise<void> {
     const parsedCSV: any[] = await parseCSV(pathToCSVFile)
     const client = new LuneClient(process.env.LUNE_API_KEY)
 
+    const account = await client.getAccount()
+    if (account.err) {
+        const error = account.val
+        if (error.statusCode) {
+            console.log(`The Lune API returned a non-success response: ${error.description}.`)
+            console.log(`Verify that the API key you provided is correct.`)
+            console.log(
+                `Request id (make sure you quote this value to the support): ${error.requestId}.`,
+            )
+        } else {
+            console.log(`Failed to communicate with the Lune API servers.`)
+            console.log(
+                `Verify that your network connection works correctly and no firewall blocks connections to api.lune.co.`,
+            )
+        }
+        console.log(
+            'If the issue persists contact Lune support and quote the whole error message above.',
+        )
+        process.exit(1)
+    }
+
     const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
     progressBar.start(parsedCSV.length, 0)
     const estimates: EstimateResult[] = []
