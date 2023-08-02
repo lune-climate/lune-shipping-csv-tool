@@ -181,7 +181,9 @@ async function main(): Promise<void> {
         if (error.statusCode) {
             console.log(`The Lune API returned a non-success response: ${error.description}.`)
             console.log(`Verify that the API key you provided is correct.`)
-            console.log(`Request id (make sure you quote this value to the support): ${error.requestId}.`)
+            console.log(
+                `Request id (make sure you quote this value to the support): ${error.requestId}.`,
+            )
         } else {
             console.log(`Failed to communicate with the Lune API servers.`)
             console.log(
