@@ -635,15 +635,15 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@lune-climate/lune@^2.11.1":
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/@lune-climate/lune/-/lune-2.11.1.tgz#bf29e0904be94ba9774e2549b7ae09d88a9a7526"
-  integrity sha512-t8AbKXWWEYpb2PW2mO4fthDwlYqPVoeXNQN06Hl3sj0/ljjHjaQbk1xtBDD1J2b7EcX2Lq4Y4QrvXfvUB7iI9w==
+"@lune-climate/lune@^2.13.0":
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/@lune-climate/lune/-/lune-2.13.0.tgz#b603922ebea965186fb8004c68fa656d9d5f7f7a"
+  integrity sha512-XArZqpDx7bHE6pyjHeAOGtlxCSN3Y4O76plV3rLhe/MjI4BG4l6wEuWxix3ia/qrzGhrmoevKKNYxHJkrgVFKw==
   dependencies:
     axios "^1.4.0"
     camelcase-keys "^6.2.2"
     snakecase-keys "^5.0.0"
-    ts-results-es "^3.4.0"
+    ts-results-es "^4.0.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -3270,10 +3270,10 @@ touch@^3.1.0:
   dependencies:
     nopt "~1.0.10"
 
-ts-results-es@^3.4.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/ts-results-es/-/ts-results-es-3.5.0.tgz#c8eeea990256d873b1fb42f949bef21e3ae80dbd"
-  integrity sha512-W7Vtg9u7QsutEfDbLEJNDlDrYGK7spxab6Je+K9+tjI/ixCM1ouniQmHJX0mZUok5WsWiCGxQy6lIrI//nBzTg==
+ts-results-es@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ts-results-es/-/ts-results-es-4.0.0.tgz#0116b1121c6c6e1b892009983048efb2be0744ff"
+  integrity sha512-v8vi0R4hu3Z5CugRPGA2qnIns4a4j+3/Bkh5Iak041AsBNOYA6DNjoijvHDli76Grt6KvihU6errHX03Fz9Jzw==
 
 tslib@^1.8.1:
   version "1.14.1"
