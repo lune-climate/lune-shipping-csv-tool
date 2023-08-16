@@ -176,9 +176,9 @@ async function main(): Promise<void> {
     const client = new LuneClient(process.env.LUNE_API_KEY)
 
     const account = await client.getAccount()
-    if (account.err) {
-        const error = account.val
-        if (error.statusCode) {
+    if (account.isErr()) {
+        const error = account.error
+        if ('statusCode' in error && error.statusCode) {
             console.log(`The Lune API returned a non-success response: ${error.description}.`)
             console.log(`Verify that the API key you provided is correct.`)
             console.log(
@@ -207,12 +207,12 @@ async function main(): Promise<void> {
 
         while (retriesLeft-- > 0) {
             const estimateResponse = await client.createMultiLegShippingEstimate(payload)
-            if (estimateResponse.ok) {
+            if (estimateResponse.isOk()) {
                 estimates.push(estimateResponse.unwrap())
                 break
             }
-            const apiError = estimateResponse.val
-            const statusCode = apiError.statusCode
+            const apiError = estimateResponse.error
+            const statusCode = 'statusCode' in apiError ? apiError.statusCode : undefined
             const shouldRetry =
                 retriesLeft > 0 &&
                 // If we see no status code this means it's some kind of a communication error
@@ -229,7 +229,7 @@ async function main(): Promise<void> {
             const description = [
                 apiError.description,
                 ...[
-                    (apiError.errors?.errors ?? []).map(
+                    ('errors' in apiError ? apiError.errors?.errors ?? [] : []).map(
                         ({ errorCode, message }) => `${errorCode}: ${message}`,
                     ),
                 ],
