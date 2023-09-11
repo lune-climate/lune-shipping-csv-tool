@@ -1,6 +1,9 @@
 lune-shipping-csv-tool
 ======================
 
+**NOTE: This tool is now deprecated: you can continue using it knowing it won't be maintained. Signup to https://dashboard.lune.co to use its replacement.**
+
+
 [![CI](https://github.com/lune-climate/lune-shipping-csv-tool/actions/workflows/ci.yml/badge.svg)](https://github.com/lune-climate/lune-shipping-csv-tool/actions/workflows/ci.yml)
 [![NPM version](https://img.shields.io/npm/v/lune-shipping-csv-tool.svg)](https://npmjs.org/package/lune-shipping-csv-tool)
 [![Coverage](https://codecov.io/github/lune-climate/lune-shipping-csv-tool/branch/master/graph/badge.svg?token=I0D88NXGB8)](https://codecov.io/github/lune-climate/lune-shipping-csv-tool)
